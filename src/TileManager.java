@@ -21,15 +21,16 @@ public class TileManager {
     public void getTileImage() {
             tile[0]=new Tile();
             tile[0].image= new ImageIcon("imgs/grass.png").getImage();
+            tile[0].brake=true;
             tile[1]=new Tile();
             tile[1].image= new ImageIcon("imgs/brickWall.jpg").getImage();
             tile[1].collide=true;
             tile[2]=new Tile();
             tile[2].image= new ImageIcon("imgs/water.jpg").getImage();
-            tile[2].collide=true;
+            tile[2].livesDown = true;
             tile[3]=new Tile();
             tile[3].image= new ImageIcon("imgs/lava.jpg").getImage();
-            tile[3].collide=true;
+            tile[3].livesDown = true;
             tile[4]=new Tile();
             tile[4].image= new ImageIcon("imgs/tree.png").getImage();
             tile[4].collide=true;
@@ -61,6 +62,11 @@ public class TileManager {
         }catch (Exception e){
 
         }
+    }
+    public void paintCell(int row, int col, int tile){
+        int texture = 0;
+        if(tile==0) texture = 5;
+        mapTileNum[col][row]=texture;
     }
     public void draw(Graphics2D g2){
         int colWorld = 0, rowWorld = 0;
