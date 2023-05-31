@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class GamePanel extends JPanel implements Runnable{
     public final int orTankSize = 23, scale = 3, tankSize = orTankSize*scale;
@@ -14,6 +13,7 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     KeyHandler handler = new KeyHandler();
     playerTank player = new playerTank(this, handler);
+    CollisionChecker checker = new CollisionChecker(this);
     int FPS = 60;
     TileManager manager = new TileManager(this);
 

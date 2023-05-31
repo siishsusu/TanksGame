@@ -13,30 +13,46 @@ public class playerTank extends Tanks{
         screenX = panel.screenWidth/2-panel.tankSize/2;
         screenY = panel.screenHeight/2-panel.tankSize/2;
 
+        solidCollision = new Rectangle(0,0,55,55);
+
         setDefault();
+        lives=3;
     }
     public void setDefault (){
         playerX = panel.tankSize*23;
         playerY = panel.tankSize*21;
-        playerSpeed=3;
+        playerSpeed=4;
+        direction="left";
     }
     public void update() {
-        if (handler.up) {
-            playerY -= playerSpeed;
-            Image image = new ImageIcon("imgs/yellowUp.png").getImage();
-            tankImage = image;
-        } else if (handler.down) {
-            playerY += playerSpeed;
-            Image image = new ImageIcon("imgs/yellowDown.png").getImage();
-            tankImage = image;
-        } else if (handler.right) {
-            playerX += playerSpeed;
-            Image image = new ImageIcon("imgs/yellowRight.png").getImage();
-            tankImage = image;
-        } else if (handler.left) {
-            playerX -= playerSpeed;
-            Image image = new ImageIcon("imgs/yellowLeft.png").getImage();
-            tankImage = image;
+        if(handler.up==true||handler.down==true||handler.right==true||handler.left==true){
+            isCollided=false; isLivesDown=false;
+            panel.checker.collideWithTile(this);
+            if (handler.up) {
+                Image image = new ImageIcon("imgs/yellowUp.png").getImage();
+                tankImage = image;
+                direction="up";
+            } else if (handler.down) {
+                Image image = new ImageIcon("imgs/yellowDown.png").getImage();
+                tankImage = image;
+                direction="down";
+            } else if (handler.right) {
+                Image image = new ImageIcon("imgs/yellowRight.png").getImage();
+                tankImage = image;
+                direction="right";
+            } else if (handler.left) {
+                Image image = new ImageIcon("imgs/yellowLeft.png").getImage();
+                tankImage = image;
+                direction="left";
+            }
+            if(isCollided==false && lives>0){
+                switch (direction){
+                    case "up": playerY -= playerSpeed; break;
+                    case "down": playerY += playerSpeed; break;
+                    case "right": playerX += playerSpeed; break;
+                    case "left": playerX -= playerSpeed; break;
+                }
+            }
         }
     }
     public void draw(Graphics2D g2d){
@@ -45,5 +61,9 @@ public class playerTank extends Tanks{
         panel.manager.draw(g2d);
         int imageSize = panel.tankSize;
         g2d.drawImage(tankImage, screenX, screenY, imageSize, imageSize, null);
+        if (handler.shoot) {
+            Bullet bullet = new Bullet(playerX,playerY);
+            bullet.getBullet(direction, g2d);
+        }
     }
 }
