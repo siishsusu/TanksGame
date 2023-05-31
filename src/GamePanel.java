@@ -10,18 +10,13 @@ public class GamePanel extends JPanel implements Runnable{
     final int worldWidth = tankSize*maxWorldCol, worldHeight = tankSize*maxWorldRow;
     public final int titleState = 0, level1State = 1, level2State = 2, level3State = 3,
             pauseState = 4, endState = 5, shopState = 6;
-    final int screenX = screenWidth/2-tankSize/2, screenY = screenHeight/2-tankSize/2;
     public static int gameState;
     Thread gameThread;
     KeyHandler handler = new KeyHandler();
+    playerTank player = new playerTank(this, handler);
     int FPS = 60;
-    Image tankImage = new ImageIcon("imgs/yellowRight.png").getImage();
     TileManager manager = new TileManager(this);
 
-    //початкова позиція гравця
-    int playerX=tankSize*23;
-    int playerY=tankSize*21;
-    int playerSpeed=3;
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -41,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
         double drawInterval =1000000000/FPS;
         double nextDrawTime = System.nanoTime()+drawInterval;
         while (gameThread!=null){
-            update();
+            player.update();
             repaint();
             try {
                 double remainingTime = nextDrawTime-System.nanoTime();
@@ -54,35 +49,10 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
     }
-    public void update() {
-        if (handler.up) {
-            playerY -= playerSpeed;
-            Image image = new ImageIcon("imgs/yellowUp.png").getImage();
-            tankImage = image;
-        } else if (handler.down) {
-            playerY += playerSpeed;
-            Image image = new ImageIcon("imgs/yellowDown.png").getImage();
-            tankImage = image;
-        } else if (handler.right) {
-            playerX += playerSpeed;
-            Image image = new ImageIcon("imgs/yellowRight.png").getImage();
-            tankImage = image;
-        } else if (handler.left) {
-            playerX -= playerSpeed;
-            Image image = new ImageIcon("imgs/yellowLeft.png").getImage();
-            tankImage = image;
-        }
-    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setBackground(Color.WHITE);
-        g2d.clearRect(0, 0, getWidth(), getHeight());
-        manager.draw(g2d);
-        int imageX = playerX;
-        int imageY = playerY;
-        int imageSize = tankSize;
-        g2d.drawImage(tankImage, screenX, screenY, imageSize, imageSize, null);
+        player.draw(g2d);
     }
 
 }
