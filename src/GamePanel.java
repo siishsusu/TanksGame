@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     KeyHandler handler = new KeyHandler();
     int FPS = 60;
-    Image tankImage = new ImageIcon("yellowRight.png").getImage();
+    Image tankImage = new ImageIcon("imgs/yellowRight.png").getImage();
     TileManager manager = new TileManager(this);
 
     //початкова позиція гравця
@@ -58,19 +58,19 @@ public class GamePanel extends JPanel implements Runnable{
     public void update() {
         if (handler.up) {
             playerY -= playerSpeed;
-            Image image = new ImageIcon("yellowUp.png").getImage();
+            Image image = new ImageIcon("imgs/yellowUp.png").getImage();
             tankImage = image;
         } else if (handler.down) {
             playerY += playerSpeed;
-            Image image = new ImageIcon("yellowDown.png").getImage();
+            Image image = new ImageIcon("imgs/yellowDown.png").getImage();
             tankImage = image;
         } else if (handler.right) {
             playerX += playerSpeed;
-            Image image = new ImageIcon("yellowRight.png").getImage();
+            Image image = new ImageIcon("imgs/yellowRight.png").getImage();
             tankImage = image;
         } else if (handler.left) {
             playerX -= playerSpeed;
-            Image image = new ImageIcon("yellowLeft.png").getImage();
+            Image image = new ImageIcon("imgs/yellowLeft.png").getImage();
             tankImage = image;
         }
     }

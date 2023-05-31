@@ -20,21 +20,21 @@ public class TileManager {
     }
     public void getTileImage() {
             tile[0]=new Tile();
-            tile[0].image= new ImageIcon("grass.png").getImage();
+            tile[0].image= new ImageIcon("imgs/grass.png").getImage();
             tile[1]=new Tile();
-            tile[1].image= new ImageIcon("brickWall.jpg").getImage();
+            tile[1].image= new ImageIcon("imgs/brickWall.jpg").getImage();
             tile[1].collide=true;
             tile[2]=new Tile();
-            tile[2].image= new ImageIcon("water.jpg").getImage();
+            tile[2].image= new ImageIcon("imgs/water.jpg").getImage();
             tile[2].collide=true;
             tile[3]=new Tile();
-            tile[3].image= new ImageIcon("lava.jpg").getImage();
+            tile[3].image= new ImageIcon("imgs/lava.jpg").getImage();
             tile[3].collide=true;
             tile[4]=new Tile();
-            tile[4].image= new ImageIcon("tree.png").getImage();
+            tile[4].image= new ImageIcon("imgs/tree.png").getImage();
             tile[4].collide=true;
             tile[5]=new Tile();
-            tile[5].image= new ImageIcon("sand.jpg").getImage();
+            tile[5].image= new ImageIcon("imgs/sand.jpg").getImage();
 
     }
     public void loadMap(){
