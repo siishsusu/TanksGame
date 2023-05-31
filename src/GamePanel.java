@@ -8,7 +8,8 @@ public class GamePanel extends JPanel implements Runnable{
     final int maxWorldCol = 50, maxWorldRow = 50;
     final int screenWidth = tankSize*maxScreenCol, screenHeight = tankSize*maxScreenRow;
     final int worldWidth = tankSize*maxWorldCol, worldHeight = tankSize*maxWorldRow;
-    public final int titleState = 0, playState = 1, pauseState = 2, endState = 3, shopState = 4;
+    public final int titleState = 0, level1State = 1, level2State = 2, level3State = 3,
+            pauseState = 4, endState = 5, shopState = 6;
     final int screenX = screenWidth/2-tankSize/2, screenY = screenHeight/2-tankSize/2;
     public static int gameState;
     Thread gameThread;
@@ -40,10 +41,8 @@ public class GamePanel extends JPanel implements Runnable{
         double drawInterval =1000000000/FPS;
         double nextDrawTime = System.nanoTime()+drawInterval;
         while (gameThread!=null){
-
             update();
             repaint();
-
             try {
                 double remainingTime = nextDrawTime-System.nanoTime();
                 remainingTime=remainingTime/1000000;
