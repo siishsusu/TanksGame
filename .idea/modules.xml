@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TanksGame.iml" filepath="$PROJECT_DIR$/TanksGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/font/font.iml" filepath="$PROJECT_DIR$/font/font.iml" />
       <module fileurl="file://$PROJECT_DIR$/imgs/imgs.iml" filepath="$PROJECT_DIR$/imgs/imgs.iml" />
     </modules>
   </component>

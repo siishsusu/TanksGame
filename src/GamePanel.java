@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable{
     public final int orTankSize = 23, scale = 3, tankSize = orTankSize*scale;
@@ -8,12 +9,13 @@ public class GamePanel extends JPanel implements Runnable{
     final int screenWidth = tankSize*maxScreenCol, screenHeight = tankSize*maxScreenRow;
     final int worldWidth = tankSize*maxWorldCol, worldHeight = tankSize*maxWorldRow;
     public final int titleState = 0, level1State = 1, level2State = 2, level3State = 3,
-            pauseState = 4, endState = 5, shopState = 6;
+            pauseState = 4, endState = 5, playState = 6;
     public static int gameState;
     Thread gameThread;
-    KeyHandler handler = new KeyHandler();
+    KeyHandler handler = new KeyHandler(this);
     playerTank player = new playerTank(this, handler);
     CollisionChecker checker = new CollisionChecker(this);
+    Interface ui = new Interface(this);
     int FPS = 60;
     TileManager manager = new TileManager(this);
 
@@ -36,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
         double drawInterval =1000000000/FPS;
         double nextDrawTime = System.nanoTime()+drawInterval;
         while (gameThread!=null){
-            player.update();
+            update();
             repaint();
             try {
                 double remainingTime = nextDrawTime-System.nanoTime();
@@ -49,10 +51,15 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
     }
+    public void update() {
+        if(gameState==playState)player.update();
+        else if (gameState==pauseState);
+    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         player.draw(g2d);
+            ui.draw(g2d);
     }
 
 }

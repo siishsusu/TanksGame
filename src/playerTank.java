@@ -16,7 +16,9 @@ public class playerTank extends Tanks{
         solidCollision = new Rectangle(0,0,55,55);
 
         setDefault();
-        lives=3;
+        maxLives=3;
+        lives=maxLives;
+        panel.gameState=panel.playState;
     }
     public void setDefault (){
         playerX = panel.tankSize*23;
@@ -52,6 +54,8 @@ public class playerTank extends Tanks{
                     case "right": playerX += playerSpeed; break;
                     case "left": playerX -= playerSpeed; break;
                 }
+            }if(lives==0){
+                panel.ui.gameOver=true;
             }
         }
     }

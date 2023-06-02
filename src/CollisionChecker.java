@@ -32,7 +32,7 @@ public class CollisionChecker {
                     if(panel.player.lives>0){
                         tanks.isLivesDown = true;
                         panel.player.lives--;
-                        //додати екран, що попереджає про те, що віднялося життя
+                        panel.ui.showMessage("Ви втратили 1 життя");
                         panel.player.setDefault();
                     }
                 }

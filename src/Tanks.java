@@ -5,5 +5,5 @@ public class Tanks {
     public Rectangle solidCollision;
     public boolean isCollided = false, isBreakable = false, isLivesDown = false;
     String direction;
-    public int lives;
+    public int lives, maxLives;
 }
