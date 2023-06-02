@@ -82,7 +82,7 @@ public class Interface {
         int x, y;
         x = panel.tankSize / 2;
         y = panel.tankSize / 2;
-        for (int i = 0; i < panel.player.maxLives/2; i++) {
+        for (int i = 0; i < panel.player.maxLives; i++) {
             g2.drawImage(heartBlank, x, y, panel.tankSize, panel.tankSize, null);
             x += panel.tankSize;
             if(x>=panel.screenWidth/2){
@@ -102,7 +102,7 @@ public class Interface {
 //                x += panel.tankSize;
 //            }
 //        } else {
-            for (int i = 0; i < panel.player.maxLives; i++) {
+            for (int i = 0; i < panel.player.lives; i++) {
                 g2.drawImage(heartFull, x, y, panel.tankSize, panel.tankSize, null);
                 x += panel.tankSize;
                 if(x>=panel.screenWidth/2){
