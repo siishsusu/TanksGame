@@ -1,20 +1,24 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Bullet {
+public class Bullet extends Projectiles{
     private int x, y;
-    Image bullet;
     GamePanel panel;
-    public Bullet(int x, int y){
-        this.x=x;
-        this.y=y;
+    Image bulletImage;
+    public Bullet(GamePanel panel){
+        super(panel);
+        this.panel=panel;
+        alive=false;
+        direction="right";
+        playerSpeed = 7;
+        maxLives = 100;
+        lives = maxLives;
+        getBullet();
     }
-    public void getBullet(String direction, Graphics2D g2){
-            if(direction.equals("up")) bullet = new ImageIcon("imgs/bulletDown.png").getImage();
-            else if(direction.equals("down")) bullet = new ImageIcon("imgs/bulletUp.png").getImage();
-            else if(direction.equals("right")) bullet = new ImageIcon("imgs/bulletLeft.png").getImage();
-            else if(direction.equals("left")) bullet = new ImageIcon("imgs/bulletRight.png").getImage();
-
-            g2.drawImage(bullet, x, y, 150, 150, null);
+    public void getBullet(){
+            up = new ImageIcon("imgs/bulletDown.png").getImage();
+            down = new ImageIcon("imgs/bulletUp.png").getImage();
+            right = new ImageIcon("imgs/bulletLeft.png").getImage();
+            left = new ImageIcon("imgs/bulletRight.png").getImage();
     }
 }

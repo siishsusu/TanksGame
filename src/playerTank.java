@@ -1,12 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class playerTank extends Tanks{
     GamePanel panel;
     KeyHandler handler;
     int screenX, screenY;
+
     Image tankImage = new ImageIcon("imgs/yellowRight.png").getImage();
     public playerTank(GamePanel panel, KeyHandler handler){
+        super(panel);
         this.panel=panel;
         this.handler=handler;
 
@@ -18,6 +21,8 @@ public class playerTank extends Tanks{
         setDefault();
         maxLives=3;
         lives=maxLives;
+        maxEnergy=5;
+        energy=maxEnergy;
         panel.gameState=panel.playState;
     }
     public void setDefault (){
@@ -25,26 +30,30 @@ public class playerTank extends Tanks{
         playerY = panel.tankSize*21;
         playerSpeed=4;
         direction="left";
+        projectiles = new Bullet(panel);
+        getPlayerImage();
+    }
+    public void getPlayerImage(){
+        up = new ImageIcon("imgs/yellowUp.png").getImage();
+        down = new ImageIcon("imgs/yellowDown.png").getImage();
+        right = new ImageIcon("imgs/yellowRight.png").getImage();
+        left = new ImageIcon("imgs/yellowLeft.png").getImage();
     }
     public void update() {
         if(handler.up==true||handler.down==true||handler.right==true||handler.left==true){
             isCollided=false; isLivesDown=false;
             panel.checker.collideWithTile(this);
             if (handler.up) {
-                Image image = new ImageIcon("imgs/yellowUp.png").getImage();
-                tankImage = image;
+                tankImage = up;
                 direction="up";
             } else if (handler.down) {
-                Image image = new ImageIcon("imgs/yellowDown.png").getImage();
-                tankImage = image;
+                tankImage = down;
                 direction="down";
             } else if (handler.right) {
-                Image image = new ImageIcon("imgs/yellowRight.png").getImage();
-                tankImage = image;
+                tankImage = right;
                 direction="right";
             } else if (handler.left) {
-                Image image = new ImageIcon("imgs/yellowLeft.png").getImage();
-                tankImage = image;
+                tankImage = left;
                 direction="left";
             }
             if(isCollided==false && lives>0){
@@ -58,6 +67,10 @@ public class playerTank extends Tanks{
                 panel.ui.gameOver=true;
             }
         }
+        if(handler.shoot==true && !projectiles.alive){
+            projectiles.set(playerX,playerY,direction,this,true);
+            panel.projectilesList.add(projectiles);
+        }
     }
     public void draw(Graphics2D g2d){
         g2d.setBackground(Color.WHITE);
@@ -65,9 +78,5 @@ public class playerTank extends Tanks{
         panel.manager.draw(g2d);
         int imageSize = panel.tankSize;
         g2d.drawImage(tankImage, screenX, screenY, imageSize, imageSize, null);
-        if (handler.shoot) {
-            Bullet bullet = new Bullet(playerX,playerY);
-            bullet.getBullet(direction, g2d);
-        }
     }
 }
