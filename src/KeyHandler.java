@@ -4,6 +4,9 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
     public boolean up, down, left, right, shoot, pause;
     GamePanel panel;
+    AudioStorage audioStorage = new AudioStorage();
+    Audio a= audioStorage.getTrack(10);
+    Audio shootAudio= audioStorage.getTrack(6);
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -16,15 +19,25 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
         if(panel.gameState==panel.playState){
             if (code == KeyEvent.VK_UP) {
+                a.play();
+                a.timerPlay();
                 up = true;
             } else if (code == KeyEvent.VK_DOWN) {
+                a.play();
+                a.timerPlay();
                 down = true;
             } else if (code == KeyEvent.VK_LEFT) {
+                a.play();
+                a.timerPlay();
                 left = true;
             } else if (code == KeyEvent.VK_RIGHT) {
+                a.play();
+                a.timerPlay();
                 right = true;
             } else if (code == KeyEvent.VK_ENTER) {
                 shoot = true;
+                shootAudio.play();
+                shootAudio.timerPlay();
             } else if (code == KeyEvent.VK_SPACE) {
                 pause = true;
                 if (panel.gameState == panel.playState) panel.gameState = panel.pauseState;
@@ -70,18 +83,25 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(panel.gameState==panel.titleState ) {
+            audioStorage.getTrack(1).sound();
+        }
         int code = e.getKeyCode();
-        if(code==KeyEvent.VK_UP){
+        if(code==KeyEvent.VK_UP&&!(panel.gameState==panel.titleState)){
             up=false;
-        }else if(code==KeyEvent.VK_DOWN){
+
+        }else if(code==KeyEvent.VK_DOWN&&!(panel.gameState==panel.titleState)){
             down=false;
-        }else if(code==KeyEvent.VK_LEFT){
+
+        }else if(code==KeyEvent.VK_LEFT &&!(panel.gameState==panel.titleState)){
             left=false;
-        }else if(code==KeyEvent.VK_RIGHT){
+
+        }else if(code==KeyEvent.VK_RIGHT&&!(panel.gameState==panel.titleState)){
             right=false;
-        }else if(code==KeyEvent.VK_ENTER){
+
+        }else if(code==KeyEvent.VK_ENTER&&!(panel.gameState==panel.titleState)){
             shoot=false;
-        }else if(code==KeyEvent.VK_SPACE){
+        }else if(code==KeyEvent.VK_SPACE&&!(panel.gameState==panel.titleState)){
             pause=false;
         }
     }

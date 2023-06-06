@@ -40,7 +40,7 @@ public class TileManager {
     }
     public void loadMap(){
         try {
-            File fe = new File("mapLevelOneLarge.txt");
+            File fe = new File("test.txt");
             FileInputStream fis = new FileInputStream(fe);
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
 

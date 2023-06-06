@@ -7,6 +7,8 @@ public class Main {
         game.setResizable(false);
 
         GamePanel gamePanel = new GamePanel();
+
+
         game.add(gamePanel);
 
         game.pack();

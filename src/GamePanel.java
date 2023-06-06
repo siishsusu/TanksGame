@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable{
+    AudioStorage audioStorage= new AudioStorage();
     public final int orTankSize = 23, scale = 3, tankSize = orTankSize*scale;
     final int maxScreenCol = 16, maxScreenRow = 11;
     final int maxWorldCol = 50, maxWorldRow = 50;
@@ -22,6 +23,8 @@ public class GamePanel extends JPanel implements Runnable{
     TileManager manager = new TileManager(this);
 
     public GamePanel(){
+        Audio a = audioStorage.getTrack(0);
+        a.sound();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
