@@ -75,4 +75,69 @@ public class CollisionChecker {
                 break;
         }
     }
+
+    public int checkTanks(Tanks tank, Tanks[] target) {
+        int index = 999;
+        for(int i = 0; i<target.length; i++){
+            if(target[i]!=null){
+                tank.solidCollision.x = tank.playerX + tank.solidCollision.x;
+                tank.solidCollision.y = tank.playerY + tank.solidCollision.y;
+
+                target[i].solidCollision.x = target[i].playerX + target[i].solidCollision.x;
+                target[i].solidCollision.y = target[i].playerY + target[i].solidCollision.y;
+
+                switch (tank.direction){
+                    case "up":
+                        tank.solidCollision.y -= tank.playerSpeed; break;
+                    case "down":
+                        tank.solidCollision.y += tank.playerSpeed; break;
+                    case "right":
+                        tank.solidCollision.x += tank.playerSpeed; break;
+                    case "left":
+                        tank.solidCollision.x -= tank.playerSpeed; break;
+                }
+                if(tank.solidCollision.intersects(target[i].solidCollision)){
+                    if(target[i]!=tank){
+                        tank.isCollided=true;
+                        index=i;
+                    }
+                }
+                tank.solidCollision.x=tank.solidCollisionSetupX;
+                tank.solidCollision.y=tank.solidCollisionSetupY;
+
+                target[i].solidCollision.x=target[i].solidCollisionSetupX;
+                target[i].solidCollision.y=target[i].solidCollisionSetupY;
+            }
+        }
+        return index;
+    }
+    public boolean checkPlayer(Tanks tank) {
+        boolean contactPlayer = false;
+            tank.solidCollision.x = tank.playerX + tank.solidCollision.x;
+            tank.solidCollision.y = tank.playerY + tank.solidCollision.y;
+
+            panel.player.solidCollision.x = panel.player.playerX + panel.player.solidCollision.x;
+            panel.player.solidCollision.y = panel.player.playerY + panel.player.solidCollision.y;
+
+            switch (tank.direction){
+                case "up":
+                    tank.solidCollision.y -= tank.playerSpeed; break;
+                case "down":
+                    tank.solidCollision.y += tank.playerSpeed; break;
+                case "right":
+                    tank.solidCollision.x += tank.playerSpeed; break;
+                case "left":
+                    tank.solidCollision.x -= tank.playerSpeed; break;
+            }
+            if(tank.solidCollision.intersects(panel.player.solidCollision)){
+                tank.isCollided=true;
+                contactPlayer=true;
+            }
+            tank.solidCollision.x=tank.solidCollisionSetupX;
+            tank.solidCollision.y=tank.solidCollisionSetupY;
+
+            panel.player.solidCollision.x=panel.player.solidCollisionSetupX;
+            panel.player.solidCollision.y=panel.player.solidCollisionSetupY;
+            return contactPlayer;
+    }
 }

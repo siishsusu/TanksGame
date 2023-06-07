@@ -50,19 +50,10 @@ public class Interface {
             }
         } else if (panel.gameState == panel.titleState && !gameOver) {
             titleScreen(g2);
-
         } else if (panel.gameState == panel.endState && gameOver) {
-
+            gameOverScreen(g2);
         } else if (panel.gameState == panel.pauseState) {
             pauseScreen();
-        }
-        if (gameOver) {
-            String overText = "Game is over";
-            g2.setFont(vampireWars.deriveFont(80f));
-            int xText = centredX(overText);
-            int yText = panel.screenHeight / 2;
-            g2.setColor(Color.YELLOW);
-            g2.drawString(overText, xText, yText);
         }
     }
 
@@ -293,6 +284,29 @@ public class Interface {
             }
         }
     }
+    private void gameOverScreen(Graphics2D g2) {
+        g2.drawImage(background, 0, 0, panel.screenWidth, panel.screenHeight, null);
+            if(titleScreenMode==1) {
+                String gameName = "Танки: Місія спалення Москви";
+                g2.setFont(retroGaming.deriveFont(35f));
+                int x = centredX(gameName);
+                int y = panel.tankSize * 3;
+                g2.setColor(Color.black);
+                g2.drawString(gameName, x--, y--);
+                g2.setColor(Color.white);
+                g2.drawString(gameName, x, y);
+
+                String text;
+                g2.setFont(retroGaming.deriveFont(35f));
+                text = "Game Over";
+                x = centredX(text);
+                y = panel.tankSize * 4;
+                g2.setColor(Color.black);
+                g2.drawString(text, x--, y--);
+                g2.setColor(Color.red);
+                g2.drawString(text, x, y);
+            }
+    }
     public int centredX(String text){
         int textLenght = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int xText = panel.screenWidth / 2 - textLenght / 2;
@@ -314,10 +328,6 @@ public class Interface {
         });
         timer.start();
     }
-
-
-
-
     public void showMessage(String text) {
         message = text;
         messageOn = true;

@@ -12,13 +12,15 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<Tanks> projectilesList = new ArrayList<>();
     public ArrayList<Tanks> tanksList = new ArrayList<>();
     public final int titleState = 0, pauseState = 1, endState = 2, playState = 3;
-    public int level;
+    public int level, playerType;
     public static int gameState;
     Thread gameThread;
     KeyHandler handler = new KeyHandler(this);
     playerTank player = new playerTank(this, handler);
     CollisionChecker checker = new CollisionChecker(this);
+    Tanks enemies[] = new Tanks[5];
     Interface ui = new Interface(this);
+    AssetsSetter setter = new AssetsSetter(this);
     int FPS = 60;
     Audio a;
     TileManager manager = new TileManager(this);
@@ -31,11 +33,15 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(handler);
         this.setFocusable(true);
-        gameState=titleState;
+        setupGame();
     }
     public void startGameThread(){
         gameThread=new Thread(this);
         gameThread.start();
+    }
+    public  void  setupGame(){
+        setter.setEnemies();
+        gameState=titleState;
     }
     @Override
     public void run() {
@@ -58,6 +64,12 @@ public class GamePanel extends JPanel implements Runnable{
     public void update() {
         if(gameState==playState){
             player.update();
+            for(int i = 0; i<enemies.length; i++){
+                if(enemies[i]!=null){
+                    if(enemies[i].alive==true && enemies[i].dying==false)enemies[i].update();
+                    else if (enemies[i].alive==false)enemies[i]=null;
+                }
+            }
             for (int i = 0; i<projectilesList.size(); i++){
                 if(projectilesList.get(i)!=null){
                     if(projectilesList.get(i).alive == true){
@@ -79,18 +91,20 @@ public class GamePanel extends JPanel implements Runnable{
             player.draw(g2d);
             tanksList.add(player);
 
+            for(int i = 0; i<enemies.length; i++){
+                if(enemies[i]!=null){
+                    tanksList.add(enemies[i]);
+                }
+            }
             for(int i = 0; i<projectilesList.size(); i++){
                 if(projectilesList.get(i)!=null){
                     tanksList.add(projectilesList.get(i));
                 }
             }
-
             for(int i = 0; i<tanksList.size(); i++){
                 tanksList.get(i).draw(g2d);
             }
-            for(int i = 0; i<tanksList.size(); i++){
-                tanksList.remove(i);
-            }
+            tanksList.clear();
             ui.draw(g2d);
 
         }

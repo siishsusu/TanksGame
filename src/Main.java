@@ -8,7 +8,6 @@ public class Main {
 
         GamePanel gamePanel = new GamePanel();
 
-
         game.add(gamePanel);
 
         game.pack();
