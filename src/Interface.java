@@ -33,7 +33,7 @@ public class Interface {
     }
     public void draw(Graphics2D g2)  {
         this.g2 = g2;
-        if (panel.gameState == panel.playState && !gameOver) {
+        if (panel.gameState == panel.playState) {
             playerLives(); playerEnergy();
             g2.setFont(retroGaming.deriveFont(30f));
             g2.setColor(Color.white);
@@ -53,7 +53,7 @@ public class Interface {
 
         } else if (panel.gameState == panel.endState && gameOver) {
 
-        } else if (panel.gameState == panel.pauseState && !gameOver) {
+        } else if (panel.gameState == panel.pauseState) {
             pauseScreen();
         }
         if (gameOver) {

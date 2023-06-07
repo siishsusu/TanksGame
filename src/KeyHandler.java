@@ -17,7 +17,7 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if(panel.gameState==panel.playState){
+        if(panel.gameState==panel.playState || panel.gameState==panel.pauseState){
             if (code == KeyEvent.VK_UP) {
                 a.play();
                 a.timerPlay();
@@ -40,8 +40,14 @@ public class KeyHandler implements KeyListener {
                 shootAudio.timerPlay();
             } else if (code == KeyEvent.VK_SPACE) {
                 pause = true;
-                if (panel.gameState == panel.playState) panel.gameState = panel.pauseState;
-                else if (panel.gameState == panel.pauseState) panel.gameState = panel.playState;
+                if (panel.gameState == panel.playState) {
+                    panel.gameState = panel.pauseState;
+                    panel.a.stop();
+                }
+                else if (panel.gameState == panel.pauseState) {
+                    panel.gameState = panel.playState;
+                    panel.a.play();
+                }
             }
         }else if(panel.gameState==panel.titleState ){
             if (code == KeyEvent.VK_UP) {
@@ -89,16 +95,12 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
         if(code==KeyEvent.VK_UP&&!(panel.gameState==panel.titleState)){
             up=false;
-
         }else if(code==KeyEvent.VK_DOWN&&!(panel.gameState==panel.titleState)){
             down=false;
-
         }else if(code==KeyEvent.VK_LEFT &&!(panel.gameState==panel.titleState)){
             left=false;
-
         }else if(code==KeyEvent.VK_RIGHT&&!(panel.gameState==panel.titleState)){
             right=false;
-
         }else if(code==KeyEvent.VK_ENTER&&!(panel.gameState==panel.titleState)){
             shoot=false;
         }else if(code==KeyEvent.VK_SPACE&&!(panel.gameState==panel.titleState)){

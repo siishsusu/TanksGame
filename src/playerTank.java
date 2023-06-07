@@ -29,7 +29,7 @@ public class playerTank extends Tanks{
         playerX = panel.tankSize*23;
         playerY = panel.tankSize*21;
         playerSpeed=4;
-        direction="left";
+        direction="right";
         projectiles = new Bullet(panel);
         getPlayerImage();
     }

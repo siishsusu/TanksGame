@@ -20,10 +20,11 @@ public class GamePanel extends JPanel implements Runnable{
     CollisionChecker checker = new CollisionChecker(this);
     Interface ui = new Interface(this);
     int FPS = 60;
+    Audio a;
     TileManager manager = new TileManager(this);
 
     public GamePanel(){
-        Audio a = audioStorage.getTrack(0);
+        a = audioStorage.getTrack(0);
         a.sound();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
