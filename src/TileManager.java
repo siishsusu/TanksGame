@@ -35,7 +35,9 @@ public class TileManager {
             tile[4].image= new ImageIcon("imgs/tree1.png").getImage();
             tile[4].collide=true;
             tile[5]=new Tile();
-            tile[5].image= new ImageIcon("imgs/sand.jpg").getImage();
+            tile[5].image= new ImageIcon("imgs/sand1.png").getImage();
+            tile[6]=new Tile();
+            tile[6].image= new ImageIcon("imgs/tree2.png").getImage();
 
     }
     public void loadMap(){
