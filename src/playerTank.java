@@ -5,7 +5,7 @@ public class playerTank extends Tanks{
     GamePanel panel;
     KeyHandler handler;
     int screenX, screenY;
-    Image tankImage = new ImageIcon("imgs/yellowRight.png").getImage();
+    Image tankImage = new ImageIcon("imgs/tank-right.png").getImage();
     public playerTank(GamePanel panel, KeyHandler handler){
         super(panel);
         this.panel=panel;
@@ -40,10 +40,10 @@ public class playerTank extends Tanks{
         getPlayerImage();
     }
     public void getPlayerImage(){
-        up = new ImageIcon("imgs/yellowUp.png").getImage();
-        down = new ImageIcon("imgs/yellowDown.png").getImage();
-        right = new ImageIcon("imgs/yellowRight.png").getImage();
-        left = new ImageIcon("imgs/yellowLeft.png").getImage();
+        up = new ImageIcon("imgs/tank-up.png").getImage();
+        down = new ImageIcon("imgs/tank-down.png").getImage();
+        right = new ImageIcon("imgs/tank-right.png").getImage();
+        left = new ImageIcon("imgs/tank-left.png").getImage();
     }
     public void attack(){
         int worldX = playerX;

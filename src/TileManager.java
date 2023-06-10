@@ -32,7 +32,7 @@ public class TileManager {
             tile[3].image= new ImageIcon("imgs/lava.jpg").getImage();
             tile[3].livesDown = true;
             tile[4]=new Tile();
-            tile[4].image= new ImageIcon("imgs/tree.png").getImage();
+            tile[4].image= new ImageIcon("imgs/tree1.png").getImage();
             tile[4].collide=true;
             tile[5]=new Tile();
             tile[5].image= new ImageIcon("imgs/sand.jpg").getImage();

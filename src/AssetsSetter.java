@@ -1,4 +1,3 @@
-import sun.security.krb5.internal.PAData;
 
 public class AssetsSetter {
     GamePanel panel;
