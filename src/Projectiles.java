@@ -4,7 +4,7 @@ public class Projectiles extends Tanks{
         super(panel);
     }
     public void set (int playerX, int playerY, String direction, Tanks user, boolean alive){
-        panel.playerType=3;
+        playerType=3;
         this.playerX=playerX;
         this.playerY=playerY;
         this.direction=direction;

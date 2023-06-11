@@ -15,7 +15,7 @@ public class Turrets {
     public Image turretImg;
     GamePanel panel;
         public Turrets(GamePanel panel) {
-            panel.playerType = 2;
+//            panel.playerType = 2;
             maxLives=1;
             lives=maxLives;
             projectiles = new Bullet(panel);
@@ -42,13 +42,13 @@ public class Turrets {
                  image=turretImg;
 
 
-            if(panel.playerType==2){
-                g2.setColor(Color.black);
-                int fill = lives/panel.tankSize*100;
-                g2.drawRect(screenX-1, screenY-16, panel.tankSize+2, 12);
-                g2.setColor(Color.green);
-                g2.fillRect(screenX, screenY-15, panel.tankSize, 10);
-            }
+//            if(panel.playerType==2){
+//                g2.setColor(Color.black);
+//                int fill = lives/panel.tankSize*100;
+//                g2.drawRect(screenX-1, screenY-16, panel.tankSize+2, 12);
+//                g2.setColor(Color.green);
+//                g2.fillRect(screenX, screenY-15, panel.tankSize, 10);
+//            }
             if(dying){
                 dying(g2);
             }
@@ -96,13 +96,13 @@ public class Turrets {
 
             }
 
-            shootEnemy++;
-            if(shootEnemy==150){
-                projectiles.set(playerX,playerY,direction,this,true);
-                panel.projectilesList.add(projectiles);
-
-                shootEnemy=0;
-            }
+//            shootEnemy++;
+//            if(shootEnemy==150){
+//                projectiles.set(playerX,playerY,direction,this,true);
+//                panel.projectilesList.add(projectiles);
+//
+//                shootEnemy=0;
+//            }
         }
     }
 

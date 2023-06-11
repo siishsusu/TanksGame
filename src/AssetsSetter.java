@@ -5,8 +5,8 @@ public class AssetsSetter {
         this.panel=panel;
     }
     public void setEnemies(){
-        panel.enemies[0]=new enemyTanks(panel);
-        panel.enemies[0].playerX=panel.tankSize*24;
-        panel.enemies[0].playerY=panel.tankSize*18;
+        panel.enemies.add(new enemyTanks(panel));
+        panel.enemies.get(0).playerX=panel.tankSize*24;
+        panel.enemies.get(0).playerY=panel.tankSize*17;
     }
 }

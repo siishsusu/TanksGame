@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Tanks {
     public int playerX, playerY, playerSpeed, shootEnemy = 0, spriteNum = 1, actions,
-            solidCollisionSetupX, solidCollisionSetupY, invincibleCounter = 0, attack;
+            solidCollisionSetupX, solidCollisionSetupY, invincibleCounter = 0, attack, playerType, coinsAll, coins;;
     public Rectangle solidCollision = new Rectangle(), attackArea =  new Rectangle();
     public boolean isCollided = false, isBreakable = false, isLivesDown = false, alive = true, invincible = false;
     protected int defense;
@@ -24,10 +24,10 @@ public class Tanks {
         panel.checker.checkTanks(this, panel.enemies);
         boolean contact = panel.checker.checkPlayer(this);
         //ДОПИСАТИ ПРО КУЛІ
-        if(contact){
+        if(contact && playerType==2){
             if(!panel.player.invincible){
                 panel.player.invincible=true;
-                panel.player.lives--;
+//                panel.player.lives--;
             }
         }
         if(isCollided==false){
@@ -38,6 +38,14 @@ public class Tanks {
                 case "left": playerX -= playerSpeed; break;
             }
         }
+    }
+    public void setLives(int number){
+        maxLives=number;
+        lives=maxLives;
+    }
+    public void setEnergy(int number){
+        maxEnergy=number;
+        energy=maxEnergy;
     }
     public void draw(Graphics2D g2){
         Image image = null;
@@ -54,12 +62,16 @@ public class Tanks {
                 case "right": image=right; break;
                 case "left": image=left; break;
             }
-            if(panel.playerType==2){
+            if(playerType==2){
+
+                int x=screenX;
+                double oneScale = panel.tankSize/maxLives;
+                double value = oneScale*lives;
                 g2.setColor(Color.black);
-                int fill = lives/panel.tankSize*100;
                 g2.drawRect(screenX-1, screenY-16, panel.tankSize+2, 12);
+
                 g2.setColor(Color.green);
-                g2.fillRect(screenX, screenY-15, panel.tankSize, 10);
+                g2.fillRect(screenX, screenY-15, (int) value, 10);
             }
             if(dying){
                 dying(g2);

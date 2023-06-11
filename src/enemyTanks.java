@@ -1,15 +1,13 @@
 import javax.swing.*;
-import java.awt.*;
 import java.util.Random;
 
 public class enemyTanks extends Tanks{
     public enemyTanks(GamePanel panel) {
         super(panel);
-        panel.playerType = 2;
+        playerType = 2;
 
         playerSpeed=2;
-        maxLives=1;
-        lives=maxLives;
+        setLives(1);
         projectiles = new Bullet(panel);
         alive=true;
 
@@ -29,6 +27,11 @@ public class enemyTanks extends Tanks{
         left = new ImageIcon("imgs/enemyLeft.png").getImage();
     }
     public void setAction(){
+        if(panel.level==2) {
+            //зміни для 2 рівня
+        }else if(panel.level==3) {
+            //зміни для 3 рівня
+        }
         if(alive){
             actions++;
             if(actions==120){
@@ -45,7 +48,6 @@ public class enemyTanks extends Tanks{
         }else{
 
         }
-
         shootEnemy++;
         if(shootEnemy==150){
             projectiles.set(playerX,playerY,direction,this,true);

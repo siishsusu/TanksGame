@@ -11,6 +11,8 @@ public class playerTank extends Tanks{
         this.panel=panel;
         this.handler=handler;
 
+        playerType=1;
+
         screenX = panel.screenWidth/2-panel.tankSize/2;
         screenY = panel.screenHeight/2-panel.tankSize/2;
 
@@ -25,19 +27,28 @@ public class playerTank extends Tanks{
         attackArea.height=36;
 
         setDefault();
-        maxLives=3;
-        lives=maxLives;
-        maxEnergy=5;
-        energy=maxEnergy;
+
         panel.gameState=panel.playState;
     }
     public void setDefault (){
-        playerX = panel.tankSize*23;
-        playerY = panel.tankSize*21;
+        setDefaultPosition();
         playerSpeed=4;
-        direction="right";
+        coinsAll=999;
+        coins=0;
+        coinsAll+=coins;
+        setDefaultResources();
         projectiles = new Bullet(panel);
         getPlayerImage();
+    }
+    public void setDefaultResources(){
+        setLives(3);
+        setEnergy(5);
+        invincible=false;
+    }
+    public void setDefaultPosition(){
+        playerX = panel.tankSize*23;
+        playerY = panel.tankSize*21;
+        direction="right";
     }
     public void getPlayerImage(){
         up = new ImageIcon("imgs/tank-up.png").getImage();
@@ -68,11 +79,15 @@ public class playerTank extends Tanks{
         solidCollision.height=worldHeight;
     }
     public void update() {
+        if(panel.level==2) {
+            //зміни для 2 рівня
+        }else if(panel.level==3) {
+            //зміни для 3 рівня
+        }
         if(handler.up==true||handler.down==true||handler.right==true||handler.left==true){
                 isCollided=false; isLivesDown=false;
                 panel.checker.collideWithTile(this);
-
-                int enemyIndex = panel.checker.checkTanks(this, panel.enemies);
+                panel.checker.checkTanks(this, panel.enemies);
 
                 if (handler.up) {
                     tankImage = up;
@@ -110,25 +125,39 @@ public class playerTank extends Tanks{
                     invincibleCounter=0;
                 }
             }
+            if(lives<=0 || panel.enemies.size()<=0){
+                panel.gameState = panel.endState;
+                panel.ui.gameOver=true;
+                if(lives<=0){
+                    panel.ui.endState=2;
+                }else if(panel.enemies.size()<=0){
+                    panel.ui.endState=1;
+                }
+            }
     }
 
     public void damageEnemy(int enemyIndex, int attack) {
 
         if(enemyIndex!=999){
-            if(!panel.enemies[enemyIndex].invincible){
+            System.out.println("hit");
+            if(!panel.enemies.get(enemyIndex).invincible){
                 invincible=true;
-                int damage = attack - panel.enemies[enemyIndex].defense;
+                int damage = attack - panel.enemies.get(enemyIndex).defense;
                 if(damage < 0){
                     damage=0;
                 }
-                panel.enemies[enemyIndex].lives -= damage;
-                panel.enemies[enemyIndex].invincible = true;
-                panel.enemies[enemyIndex].reactEnemy();
+                panel.enemies.get(enemyIndex).lives -= damage;
+                panel.enemies.get(enemyIndex).invincible = false;
+                panel.enemies.get(enemyIndex).reactEnemy();
 
-                if(panel.enemies[enemyIndex].lives<=0){
-                    panel.enemies[enemyIndex].dying = true;
-                    panel.ui.gameOver=true;
-                    panel.ui.showMessage("Ви вбили когось я хз");
+                if(panel.enemies.get(enemyIndex).lives<=0){
+                    panel.enemies.get(enemyIndex).dying = true;
+                    coins+= panel.enemies.get(enemyIndex).maxLives*10;
+                    panel.enemies.remove(enemyIndex);
+
+                    if(panel.ui.gameOver==false){
+                        panel.ui.showMessage("Танк противника усунено");
+                    }
                 }
             }
         }else{

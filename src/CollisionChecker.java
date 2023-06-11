@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class CollisionChecker {
     GamePanel panel;
     public CollisionChecker(GamePanel panel){
@@ -76,15 +78,15 @@ public class CollisionChecker {
         }
     }
 
-    public int checkTanks(Tanks tank, Tanks[] target) {
+    public int checkTanks(Tanks tank, ArrayList<Tanks> target) {
         int index = 999;
-        for(int i = 0; i<target.length; i++){
-            if(target[i]!=null){
+        for(int i = 0; i<target.size(); i++){
+            if(target.get(i) !=null){
                 tank.solidCollision.x = tank.playerX + tank.solidCollision.x;
                 tank.solidCollision.y = tank.playerY + tank.solidCollision.y;
 
-                target[i].solidCollision.x = target[i].playerX + target[i].solidCollision.x;
-                target[i].solidCollision.y = target[i].playerY + target[i].solidCollision.y;
+                target.get(i).solidCollision.x = target.get(i).playerX + target.get(i).solidCollision.x;
+                target.get(i).solidCollision.y = target.get(i).playerY + target.get(i).solidCollision.y;
 
                 switch (tank.direction){
                     case "up":
@@ -96,8 +98,8 @@ public class CollisionChecker {
                     case "left":
                         tank.solidCollision.x -= tank.playerSpeed; break;
                 }
-                if(tank.solidCollision.intersects(target[i].solidCollision)){
-                    if(target[i]!=tank){
+                if(tank.solidCollision.intersects(target.get(i).solidCollision)){
+                    if(target.get(i) !=tank){
                         tank.isCollided=true;
                         index=i;
                     }
@@ -105,8 +107,8 @@ public class CollisionChecker {
                 tank.solidCollision.x=tank.solidCollisionSetupX;
                 tank.solidCollision.y=tank.solidCollisionSetupY;
 
-                target[i].solidCollision.x=target[i].solidCollisionSetupX;
-                target[i].solidCollision.y=target[i].solidCollisionSetupY;
+                target.get(i).solidCollision.x= target.get(i).solidCollisionSetupX;
+                target.get(i).solidCollision.y= target.get(i).solidCollisionSetupY;
             }
         }
         return index;
