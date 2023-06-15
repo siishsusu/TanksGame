@@ -18,8 +18,8 @@ public class playerTank extends Tanks{
 
         solidCollision.x = 0;
         solidCollision.y = 0;
-        solidCollision.width = 55;
-        solidCollision.height = 55;
+        solidCollision.width = 75;
+        solidCollision.height = 75;
         solidCollisionSetupX = solidCollision.x;
         solidCollisionSetupY = solidCollision.y;
 

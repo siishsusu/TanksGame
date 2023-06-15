@@ -39,6 +39,9 @@ public class TileManager {
             tile[6]=new Tile();
             tile[6].image= new ImageIcon("imgs/tree2.png").getImage();
             tile[6].collide=true;
+            tile[7]=new Tile();
+            tile[7].image= new ImageIcon("imgs/chest.png").getImage();
+            tile[7].collide=true;
 
     }
     public void loadMap(){

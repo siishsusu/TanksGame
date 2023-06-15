@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -11,7 +10,7 @@ public class GamePanel extends JPanel implements Runnable{
     final int screenWidth = tankSize*maxScreenCol, screenHeight = tankSize*maxScreenRow;
     public ArrayList<Tanks> projectilesList = new ArrayList<>();
     public ArrayList<Tanks> tanksList = new ArrayList<>();
-    public final int titleState = 0, pauseState = 1, endState = 2, playState = 3;
+    public final int titleState = 0, pauseState = 1, endState = 2, playState = 3, marketState=4;
     public int level = 1;
     public static int gameState;
     Thread gameThread;
@@ -22,12 +21,12 @@ public class GamePanel extends JPanel implements Runnable{
     Interface ui = new Interface(this);
     AssetsSetter setter = new AssetsSetter(this);
     int FPS = 60;
-    Audio a;
+    Audio backMusic;
     TileManager manager = new TileManager(this);
 
     public GamePanel(){
-        a = audioStorage.getTrack(0);
-        a.sound();
+        backMusic = audioStorage.getTrack(0);
+        backMusic.sound();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);

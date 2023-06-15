@@ -1,5 +1,6 @@
 public class Projectiles extends Tanks{
     Tanks user;
+
     public Projectiles(GamePanel panel){
         super(panel);
     }
@@ -12,6 +13,7 @@ public class Projectiles extends Tanks{
         this.alive=alive;
         this.lives=maxLives;
     }
+
     public void update(){
         if(user == panel.player){
             int enemyIndex = panel.checker.checkTanks(this, panel.enemies);

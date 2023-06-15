@@ -17,7 +17,7 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if(panel.gameState==panel.playState || panel.gameState==panel.pauseState){
+        if(panel.gameState==panel.playState || panel.gameState==panel.pauseState|| panel.gameState==panel.marketState){
             if (code == KeyEvent.VK_UP) {
                 a.play();
                 a.timerPlay();
@@ -42,18 +42,28 @@ public class KeyHandler implements KeyListener {
                 pause = true;
                 if (panel.gameState == panel.playState) {
                     panel.gameState = panel.pauseState;
-                    panel.a.stop();
+                    panel.backMusic.stop();
                 }
                 else if (panel.gameState == panel.pauseState) {
                     panel.gameState = panel.playState;
-                    panel.a.play();
+                    panel.backMusic.play();
                 }
             }else if (code == KeyEvent.VK_M) {
-
                 pause = false;
                     panel.gameState = panel.titleState;
                     panel.ui.titleScreenMode=1;
-                    panel.a.play();
+                    panel.backMusic.play();
+            }
+            else if (code == KeyEvent.VK_B) {
+                if (panel.gameState == panel.playState) {
+                    panel.gameState = panel.marketState;
+                    panel.backMusic.stop();
+                }
+                else if (panel.gameState == panel.marketState) {
+                    panel.gameState = panel.playState;
+                    panel.backMusic.play();
+
+                }
             }
         }else if(panel.gameState==panel.titleState || panel.gameState==panel.endState){
             if (code == KeyEvent.VK_UP) {

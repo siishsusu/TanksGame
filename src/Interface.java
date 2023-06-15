@@ -18,7 +18,9 @@ public class Interface {
     File titleFont = new File("font/Vampire Wars.ttf"), mainFont = new File("font/Retro Gaming.ttf");
     Image heartFull = new ImageIcon("imgs/heart_full.png").getImage(), heartHalf = new ImageIcon("imgs/heart_half.png").getImage(),
             heartBlank = new ImageIcon("imgs/heart_blank.png").getImage(), energy = new ImageIcon("imgs/energy.png").getImage(),
-            background = new ImageIcon("imgs/background menu.jpg").getImage(), coin = new ImageIcon("imgs/coin.png").getImage();
+            background = new ImageIcon("imgs/background menu.jpg").getImage(), coin = new ImageIcon("imgs/coin.png").getImage(),
+            hangar = new ImageIcon("imgs/hangar menu.jpg").getImage();
+
     private Graphics2D g2;
 
     public Interface(GamePanel panel) {
@@ -59,6 +61,9 @@ public class Interface {
             gameOverScreen(g2);
         } else if (panel.gameState == panel.pauseState) {
             pauseScreen();
+        }
+        else if (panel.gameState == panel.marketState) {
+            marketScreen();
         }
     }
 
@@ -355,8 +360,8 @@ public class Interface {
         String pauseText = "PAUSED";
         g2.setColor(Color.WHITE);
         g2.setFont(vampireWars.deriveFont(80f));
-        int textLenght = (int) g2.getFontMetrics().getStringBounds(pauseText, g2).getWidth();
-        int xText = panel.screenWidth / 2 - textLenght / 2;
+        int textLength = (int) g2.getFontMetrics().getStringBounds(pauseText, g2).getWidth();
+        int xText = panel.screenWidth / 2 - textLength / 2;
         int yText = panel.screenHeight / 2;
         g2.drawString(pauseText, xText, yText);
 
@@ -478,5 +483,98 @@ public class Interface {
                     y += panel.tankSize;
                 }
             }
+    }
+
+    private void marketScreen() {
+        g2.drawImage(hangar, 0, 0, panel.screenWidth, panel.screenHeight, null);
+        String marketName = "Market";
+        String pauseText = "PAUSED";
+        g2.setColor(Color.WHITE);
+        g2.setFont(vampireWars.deriveFont(80f));
+        int textLength = (int) g2.getFontMetrics().getStringBounds(pauseText, g2).getWidth();
+        int xText = panel.screenWidth / 2 - textLength / 2;
+        int yText = panel.screenHeight / 2;
+        g2.drawString(pauseText, xText, yText);
+
+        int frameX = panel.tankSize * 2, frameY = panel.tankSize, frameWidth = panel.tankSize * 12, frameHeight = panel.tankSize * 9;
+        float opacity = 0.5f; // 50% opacity
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+        Composite previousComposite = g2.getComposite();
+        g2.setComposite(alphaComposite);
+        g2.setColor(Color.black);
+        g2.fillRoundRect(frameX, frameY, frameWidth, frameHeight, 35, 35);
+        g2.setComposite(previousComposite);
+
+        String text = "Player's tank character status";
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = centredX(text);
+        yText = (int) (panel.tankSize * 1.5);
+        g2.drawString(text, xText - 1, yText - 1);
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, xText, yText);
+
+        text = "Level: " + panel.level;
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = frameX + panel.tankSize / 2;
+        yText = (int) (panel.tankSize * 2.5);
+        g2.drawString(text, xText - 1, yText - 1);
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, xText, yText);
+
+        text = "Lives: " + panel.player.lives + "/" + panel.player.maxLives;
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = frameX + panel.tankSize / 2;
+        yText = (int) (panel.tankSize * 3.5);
+        g2.drawString(text, xText - 1, yText - 1);
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, xText, yText);
+
+        text = "Energy: " + panel.player.energy + "/" + panel.player.maxEnergy;
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = frameX + panel.tankSize / 2;
+        yText = (int) (panel.tankSize * 4.5);
+        g2.drawString(text, xText - 1, yText - 1);
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, xText, yText);
+
+        text = "Speed: " + panel.player.playerSpeed;
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = frameX + panel.tankSize / 2;
+        yText = (int) (panel.tankSize * 5.5);
+        g2.drawString(text, xText - 1, yText - 1);
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, xText, yText);
+
+        text = "Coins: " + panel.player.coinsAll;
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = frameX + panel.tankSize / 2;
+        yText = (int) (panel.tankSize * 6.5);
+        g2.drawString(text, xText - 1, yText - 1);
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, xText, yText);
+
+        text = "Enemies left: " + panel.enemies.size();
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = frameX + panel.tankSize / 2;
+        yText = (int) (panel.tankSize * 7.5);
+        g2.drawString(text, xText - 1, yText - 1);
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, xText, yText);
+
+        text = "if you want to go back to the menu press M";
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = centredX(text);
+        yText = (int) (panel.tankSize * 9.5);
+        g2.drawString(text, xText - 1, yText - 1);
+        g2.setColor(Color.red);
+        g2.drawString(text, xText, yText);
     }
 }
