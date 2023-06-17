@@ -22,10 +22,10 @@ public class UsualTurret extends Tanks {
     }
 
     public void getEnemyImage() {
-        up = new ImageIcon("imgs/enemyUp.png").getImage();
-        down = new ImageIcon("imgs/enemyDown.png").getImage();
-        right = new ImageIcon("imgs/enemyRight.png").getImage();
-        left = new ImageIcon("imgs/enemyLeft.png").getImage();
+        up = new ImageIcon("imgs/turret_up.png").getImage();
+        down = new ImageIcon("imgs/turret_down.png").getImage();
+        right = new ImageIcon("imgs/turret_right.png").getImage();
+        left = new ImageIcon("imgs/turret_left.png").getImage();
     }
 
     public void setAction() {

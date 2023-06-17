@@ -12,7 +12,6 @@ public class Tanks {
     public Projectiles projectiles;
     public Image up, down, left, right;
     GamePanel panel;
-
     public Tanks(GamePanel panel) {
         this.panel=panel;
     }

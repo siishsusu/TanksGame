@@ -1,6 +1,6 @@
 public class Projectiles extends Tanks{
     Tanks user;
-
+    AudioStorage au = panel.audioStorage;
     public Projectiles(GamePanel panel){
         super(panel);
     }
@@ -18,6 +18,7 @@ public class Projectiles extends Tanks{
         if(user == panel.player){
             int enemyIndex = panel.checker.checkTanks(this, panel.enemies);
             if(enemyIndex!=999){
+                au.getTrack(7).sound();
                 panel.player.damageEnemy(enemyIndex, attack);
                 alive=false;
             }

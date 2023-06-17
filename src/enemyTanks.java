@@ -1,11 +1,13 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.Random;
 
 public class enemyTanks extends Tanks{
-    public enemyTanks(GamePanel panel) {
+    int type;
+    public enemyTanks(GamePanel panel, int type) {
         super(panel);
         playerType = 2;
-
+        this.type= type;
         playerSpeed=2;
         setLives(1);
         projectiles = new Bullet(panel);
@@ -20,11 +22,26 @@ public class enemyTanks extends Tanks{
 
         getEnemyImage();
     }
-    public void getEnemyImage(){
-        up = new ImageIcon("imgs/enemyUp.png").getImage();
-        down = new ImageIcon("imgs/enemyDown.png").getImage();
-        right = new ImageIcon("imgs/enemyRight.png").getImage();
-        left = new ImageIcon("imgs/enemyLeft.png").getImage();
+
+
+
+    public void getEnemyImage() {
+        switch (type){
+        case 1:{
+            up = new ImageIcon("imgs/enemy-tank-up-1.png").getImage();
+            down = new ImageIcon("imgs/enemy-tank-down-1.png").getImage();
+            right = new ImageIcon("imgs/enemy-tank-right-1.png").getImage();
+            left = new ImageIcon("imgs/enemy-tank-left-1.png").getImage();
+            break;
+        }
+            case 2:{
+                up = new ImageIcon("imgs/enemy-tank-up.png").getImage();
+                down = new ImageIcon("imgs/enemy-tank-down.png").getImage();
+                right = new ImageIcon("imgs/enemy-tank-right.png").getImage();
+                left = new ImageIcon("imgs/enemy-tank-left.png").getImage();
+                break;
+            }
+     }
     }
     public void setAction(){
         if(panel.level==2) {
