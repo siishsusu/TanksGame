@@ -28,10 +28,10 @@ public class Bullet extends Projectiles{
      * Геттер для отримання зображення кулі
      */
     public void getBullet(){
-        up = new ImageIcon("imgs/bulletUp.png").getImage();
-        down = new ImageIcon("imgs/bulletDown.png").getImage();
-        right = new ImageIcon("imgs/bulletRight.png").getImage();
-        left = new ImageIcon("imgs/bulletLeft.png").getImage();
+        up = new ImageIcon("imgs/bulletDown.png").getImage();
+        down = new ImageIcon("imgs/bulletUp.png").getImage();
+        right = new ImageIcon("imgs/bulletLeft.png").getImage();
+        left = new ImageIcon("imgs/bulletRight.png").getImage();
     }
     public void getRocket(){
         up = new ImageIcon("imgs/rocket-up.png").getImage();
