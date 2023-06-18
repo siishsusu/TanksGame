@@ -30,6 +30,10 @@ public class playerTank extends Tanks{
 
         panel.gameState=panel.playState;
     }
+
+    /**
+     * Налаштовує дефолт гравця
+     */
     public void setDefault (){
         setDefaultPosition();
         playerSpeed=4;
@@ -40,22 +44,38 @@ public class playerTank extends Tanks{
         projectiles = new Bullet(panel);
         getPlayerImage();
     }
+
+    /**
+     * Налаштовує дефолтні ресурси гравця
+     */
     public void setDefaultResources(){
         setLives(3);
         setEnergy(5);
         invincible=false;
     }
+
+    /**
+     * Налаштовує дефолтну позицію гравця
+     */
     public void setDefaultPosition(){
         playerX = panel.tankSize*23;
         playerY = panel.tankSize*21;
         direction="right";
     }
+
+    /**
+     * Налаштовує зображення гравця
+     */
     public void getPlayerImage(){
         up = new ImageIcon("imgs/tank-up.png").getImage();
         down = new ImageIcon("imgs/tank-down.png").getImage();
         right = new ImageIcon("imgs/tank-right.png").getImage();
         left = new ImageIcon("imgs/tank-left.png").getImage();
     }
+
+    /**
+     * Логіка стрільби
+     */
     public void attack(){
         int worldX = playerX;
         int worldY = playerY;
@@ -136,6 +156,11 @@ public class playerTank extends Tanks{
             }
     }
 
+    /**
+     * Перевіряє чи потрапив снаряд у ворога
+     * @param enemyIndex чи потрапила куля в ворога
+     * @param attack сила удару
+     */
     public void damageEnemy(int enemyIndex, int attack) {
 
         if(enemyIndex!=999){

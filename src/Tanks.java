@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Tanks {
-    public int playerX, playerY, playerSpeed, shootEnemy = 0, spriteNum = 1, actions,
+    public int playerX, playerY, playerSpeed, enemySpeed, shootEnemy = 0, spriteNum = 1, actions,
             solidCollisionSetupX, solidCollisionSetupY, invincibleCounter = 0, attack, playerType, coinsAll, coins;;
     public Rectangle solidCollision = new Rectangle(), attackArea =  new Rectangle();
     public boolean isCollided = false, isBreakable = false, isLivesDown = false, alive = true, invincible = false;
@@ -38,10 +38,20 @@ public class Tanks {
             }
         }
     }
+
+    /**
+     * @param number кількість життів
+     * сеттер для задання кількості життів танків
+     */
     public void setLives(int number){
         maxLives=number;
         lives=maxLives;
     }
+
+    /**
+     * @param number кількість енергії
+     * сеттер для задання кількості енергії танків
+     */
     public void setEnergy(int number){
         maxEnergy=number;
         energy=maxEnergy;
@@ -80,6 +90,11 @@ public class Tanks {
         }
     }
     int dyingCounter = 0;
+
+    /**
+     * @param g2
+     * Анімація вмирання танка (моргання)
+     */
     private void dying(Graphics2D g2) {
         dyingCounter ++;
         if(dyingCounter<=5){

@@ -5,6 +5,11 @@ public class CollisionChecker {
     public CollisionChecker(GamePanel panel){
         this.panel=panel;
     }
+
+    /**
+     * @param tanks
+     * Перевірка колізії з текстурами мапи
+     */
     public void collideWithTile(Tanks tanks){
         int collideUpTank = (int) (tanks.playerY+tanks.solidCollision.getY());
         int collideDownTank = (int) (tanks.playerY+tanks.solidCollision.getY()+tanks.solidCollision.getHeight());
@@ -78,6 +83,11 @@ public class CollisionChecker {
         }
     }
 
+    /**
+     * @param tank
+     * @param target
+     * @return 999, якщо танк противника не задіто й індекс танку, якщо він уражений
+     */
     public int checkTanks(Tanks tank, ArrayList<Tanks> target) {
         int index = 999;
         for(int i = 0; i<target.size(); i++){
@@ -113,6 +123,11 @@ public class CollisionChecker {
         }
         return index;
     }
+
+    /**
+     * @param tank
+     * @return false, якщо танк гравця не уражено і true, якщо уражено
+     */
     public boolean checkPlayer(Tanks tank) {
         boolean contactPlayer = false;
             tank.solidCollision.x = tank.playerX + tank.solidCollision.x;

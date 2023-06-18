@@ -86,11 +86,11 @@ public class KeyHandler implements KeyListener {
                         panel.level=1;
                         panel.gameState=panel.playState;
                     }
-                    else if(panel.ui.menuCommand==1){ //level 2
+                    else if(panel.ui.menuCommand==1 && panel.openLevel2){ //level 2
                         panel.level=2;
                         panel.gameState=panel.playState;
                     }
-                    else if(panel.ui.menuCommand==2){ //level 3
+                    else if(panel.ui.menuCommand==2 && panel.openLevel3){ //level 3
                         panel.level=3;
                         panel.gameState=panel.playState;
                     }

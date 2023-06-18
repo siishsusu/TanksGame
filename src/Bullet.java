@@ -20,12 +20,23 @@ public class Bullet extends Projectiles{
         solidCollisionSetupX = solidCollision.x;
         solidCollisionSetupY = solidCollision.y;
 
-        getBullet();
+        if(user==panel.player) getBullet();
+        else getRocket();
     }
+
+    /**
+     * Геттер для отримання зображення кулі
+     */
     public void getBullet(){
-            up = new ImageIcon("imgs/rocket-up.png").getImage();
-            down = new ImageIcon("imgs/rocket-down.png").getImage();
-            right = new ImageIcon("imgs/rocket-right.png").getImage();
-            left = new ImageIcon("imgs/rocket-left.png").getImage();
+        up = new ImageIcon("imgs/bulletUp.png").getImage();
+        down = new ImageIcon("imgs/bulletDown.png").getImage();
+        right = new ImageIcon("imgs/bulletRight.png").getImage();
+        left = new ImageIcon("imgs/bulletLeft.png").getImage();
+    }
+    public void getRocket(){
+        up = new ImageIcon("imgs/rocket-up.png").getImage();
+        down = new ImageIcon("imgs/rocket-down.png").getImage();
+        right = new ImageIcon("imgs/rocket-right.png").getImage();
+        left = new ImageIcon("imgs/rocket-left.png").getImage();
     }
 }

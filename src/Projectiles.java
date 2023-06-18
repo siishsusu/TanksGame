@@ -1,6 +1,7 @@
 public class Projectiles extends Tanks{
     Tanks user;
     AudioStorage au = panel.audioStorage;
+    public boolean playerDamaged = false;
     public Projectiles(GamePanel panel){
         super(panel);
     }
@@ -25,7 +26,7 @@ public class Projectiles extends Tanks{
         }else if(user != panel.player){
             boolean playerContacted = panel.checker.checkPlayer(this);
             if(panel.player.invincible==false && playerContacted == true){
-                damagePlayer(attack);
+                playerDamaged = damagePlayer(attack);
                 alive=false;
             }
         }
@@ -41,7 +42,11 @@ public class Projectiles extends Tanks{
         }
     }
 
-    private void damagePlayer(int attack) {
+    /**
+     * @param attack сила нанесення удару на гравця
+     * перевірка стану танку гравця
+     */
+    public boolean damagePlayer(int attack) {
         if(!panel.player.invincible){
             invincible=true;
             int damage = attack - panel.player.defense;
@@ -58,6 +63,8 @@ public class Projectiles extends Tanks{
                 panel.ui.gameOver = true;
                 panel.ui.showMessage("Ви померли");
             }
+            return true;
         }
+        return false;
     }
 }

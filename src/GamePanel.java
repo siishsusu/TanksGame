@@ -12,6 +12,7 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<Tanks> tanksList = new ArrayList<>();
     public final int titleState = 0, pauseState = 1, endState = 2, playState = 3, marketState=4;
     public int level = 1;
+    public boolean openLevel2 = false, openLevel3 = false;
     public static int gameState;
     Thread gameThread;
     KeyHandler handler = new KeyHandler(this);

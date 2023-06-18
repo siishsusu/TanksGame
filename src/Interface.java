@@ -67,6 +67,10 @@ public class Interface {
         }
     }
 
+    /**
+     * @param g2
+     * Відмальовування екрану титрів
+     */
     private void titleScreen(Graphics2D g2) {
         g2.drawImage(background, 0, 0, panel.screenWidth, panel.screenHeight, null);
         if(titleScreenMode==0){
@@ -209,47 +213,55 @@ public class Interface {
 
                 g2.setColor(Color.black);
                 g2.drawString(">", x-panel.tankSize-1, y--);
-                g2.drawString("<", (int) (x+panel.tankSize*1.8-1), y--);
 
                 g2.setColor(Color.white);
                 g2.drawString(">", x-panel.tankSize, y);
-                g2.drawString("<", (int) (x+panel.tankSize*1.8), y);
             }
-
-            text = "Level 2";
+            String emoji = "";
+            if(panel.openLevel2==true)text = "Level 2";
+            else {
+                text = "Level 2";
+                emoji = "\uD83D\uDD12";
+            }
             x = centredX(text);
             y = panel.tankSize*7;
             g2.setColor(Color.black);
             g2.drawString(text, x--, y--);
             g2.setColor(Color.white);
             g2.drawString(text, x, y);
+            Font font = new Font("Segoe UI Emoji", Font.PLAIN, 16);
+            g2.setFont(font);
+            g2.drawString(emoji, x+120, y-5);
+            g2.setFont(retroGaming.deriveFont(25f));
             if(menuCommand==1){
-
                 g2.setColor(Color.black);
                 g2.drawString(">", x-panel.tankSize-1, y--);
-                g2.drawString("<", (int) (x+panel.tankSize*1.8-1), y--);
 
                 g2.setColor(Color.white);
                 g2.drawString(">", x-panel.tankSize, y);
-                g2.drawString("<", (int) (x+panel.tankSize*1.8), y);
             }
-
-            text = "Level 3";
+            if(panel.openLevel3==true)text = "Level 3";
+            else {
+                text = "Level 3";
+                emoji = "\uD83D\uDD12";
+            }
             x = centredX(text);
             y = panel.tankSize*8;
             g2.setColor(Color.black);
             g2.drawString(text, x--, y--);
             g2.setColor(Color.white);
             g2.drawString(text, x, y);
+            //g2.setFont(retroGaming.deriveFont(16f));
+            font = new Font("Segoe UI Emoji", Font.PLAIN, 16);
+            g2.setFont(font);
+            g2.drawString(emoji, x+120, y-5);
+            g2.setFont(retroGaming.deriveFont(25f));
             if(menuCommand==2){
-
                 g2.setColor(Color.black);
                 g2.drawString(">", x-panel.tankSize-1, y--);
-                g2.drawString("<", (int) (x+panel.tankSize*1.8-1), y--);
 
                 g2.setColor(Color.white);
                 g2.drawString(">", x-panel.tankSize, y);
-                g2.drawString("<", (int) (x+panel.tankSize*1.8), y);
             }
 
             text = "Back";
@@ -262,14 +274,17 @@ public class Interface {
             if(menuCommand==3){
                 g2.setColor(Color.black);
                 g2.drawString(">", x-panel.tankSize-1, y--);
-                g2.drawString("<", (int) (x+panel.tankSize*1.8-1), y--);
 
                 g2.setColor(Color.white);
                 g2.drawString(">", x-panel.tankSize, y);
-                g2.drawString("<", (int) (x+panel.tankSize*1.8), y);
             }
         }
     }
+
+    /**
+     * @param g2
+     * Відмальовування екрану закінчення гри
+     */
     private void gameOverScreen(Graphics2D g2) {
         if(titleScreenMode==3) {
             panel.enemies.clear();
@@ -332,11 +347,20 @@ public class Interface {
             }
         }
     }
+
+    /**
+     * @param text
+     * @return позицію по Х при якій поданий в метод текст буде розміщуватися по центру екрану
+     */
     public int centredX(String text){
         int textLenght = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int xText = panel.screenWidth / 2 - textLenght / 2;
         return xText;
     }
+
+    /**
+     * Використовується для екрану титрів (завантаження гри)
+     */
     private void startTitleScreenTimer() {
         Timer timer = new Timer(550, new ActionListener() {
             @Override
@@ -352,10 +376,19 @@ public class Interface {
         });
         timer.start();
     }
+
+    /**
+     * @param text
+     * Передача тексту для відображення на екрані
+     */
     public void showMessage(String text) {
         message = text;
         messageOn = true;
     }
+
+    /**
+     * Відмальовування екрану паузи та характеристики персонажа
+     */
     public void pauseScreen() {
         String pauseText = "PAUSED";
         g2.setColor(Color.WHITE);
@@ -446,6 +479,10 @@ public class Interface {
         g2.setColor(Color.red);
         g2.drawString(text, xText, yText);
     }
+
+    /**
+     * Відмальовування енергії гравця
+     */
     public void playerEnergy() {
         int x, y;
         x = panel.tankSize;
@@ -461,6 +498,9 @@ public class Interface {
         g2.drawImage(energy, panel.tankSize/2, (int) (y*2.5), panel.tankSize, panel.tankSize, null);
     }
 
+    /**
+     * Відмальовування життів гравця
+     */
     public void playerLives() {
         int x, y;
         x = panel.tankSize / 2;
@@ -488,13 +528,12 @@ public class Interface {
     private void marketScreen() {
         g2.drawImage(hangar, 0, 0, panel.screenWidth, panel.screenHeight, null);
         String marketName = "Market";
-        String pauseText = "PAUSED";
         g2.setColor(Color.WHITE);
         g2.setFont(vampireWars.deriveFont(80f));
-        int textLength = (int) g2.getFontMetrics().getStringBounds(pauseText, g2).getWidth();
+        int textLength = (int) g2.getFontMetrics().getStringBounds(marketName, g2).getWidth();
         int xText = panel.screenWidth / 2 - textLength / 2;
         int yText = panel.screenHeight / 2;
-        g2.drawString(pauseText, xText, yText);
+        g2.drawString(marketName, xText, yText);
 
         int frameX = panel.tankSize * 2, frameY = panel.tankSize, frameWidth = panel.tankSize * 12, frameHeight = panel.tankSize * 9;
         float opacity = 0.5f; // 50% opacity
