@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -73,7 +74,9 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i<enemies.size(); i++){
                 if(enemies.get(i) !=null){
                     if(enemies.get(i).alive==true && enemies.get(i).dying==false) enemies.get(i).update();
-                    else if (enemies.get(i).alive==false) enemies.set(i, null);
+                    else if (enemies.get(i).alive==false) {
+                        enemies.remove(i);
+                    }
                 }
             }
             for (int i = 0; i<projectilesList.size(); i++){
