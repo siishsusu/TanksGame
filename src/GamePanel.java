@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements Runnable{
     public static int gameState;
     Thread gameThread;
     KeyHandler handler = new KeyHandler(this);
+    MouseHandler mouseHandler = new MouseHandler(this);
     playerTank player = new playerTank(this, handler);
     CollisionChecker checker = new CollisionChecker(this);
     public ArrayList<Tanks> enemies = new ArrayList<>();
@@ -34,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(handler);
+        this.addMouseListener(mouseHandler);
         this.setFocusable(true);
         setupGame();
     }

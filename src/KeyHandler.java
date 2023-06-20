@@ -4,15 +4,18 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
     public boolean up, down, left, right, shoot, pause;
     GamePanel panel;
-    AudioStorage audioStorage = new AudioStorage();
-    Audio a= audioStorage.getTrack(10);
-    Audio shootAudio= audioStorage.getTrack(6);
+    AudioStorage audioStorage;
+    Audio a;
+    Audio shootAudio;
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
     public KeyHandler(GamePanel panel){
         this.panel=panel;
+         audioStorage = panel.audioStorage;
+         a= audioStorage.getTrack(10);
+         shootAudio= audioStorage.getTrack(6);
     }
     @Override
     public void keyPressed(KeyEvent e) {

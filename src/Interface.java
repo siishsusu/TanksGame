@@ -545,9 +545,7 @@ public class Interface {
         int yText = panel.screenHeight / 2;
         g2.setColor(Color.WHITE);
         g2.drawString(marketName, xText, yText);
-
-
-
-
+        Image marketImage = new ImageIcon("imgs/market.png").getImage();
+        g2.drawImage(marketImage, 0, 0, panel.tankSize*16, panel.tankSize*11, null);
     }
 }
