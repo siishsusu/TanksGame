@@ -174,6 +174,9 @@ public class playerTank extends Tanks {
         if (lives <= 0 || panel.enemies.size() <= 0) {
             if(panel.level==1){
                 if (lives <= 0) {
+                    panel.gameState = panel.endState;
+                    panel.ui.gameOver = true;
+                    panel.ui.endState = 2;
                     panel.level=1;
                 } else if (panel.enemies.size() <= 0) {
                     panel.level=2;
@@ -184,6 +187,9 @@ public class playerTank extends Tanks {
                 }
             }else if (panel.level==2){
                 if (lives <= 0) {
+                    panel.gameState = panel.endState;
+                    panel.ui.gameOver = true;
+                    panel.ui.endState = 2;
                     panel.level=2;
                 } else if (panel.enemies.size() <= 0) {
                     panel.level=3;
@@ -197,6 +203,7 @@ public class playerTank extends Tanks {
             else if(panel.level==3){
                 panel.gameState = panel.endState;
                 panel.ui.gameOver = true;
+                panel.level=3;
                 if (lives <= 0) {
                     panel.ui.endState = 2;
                 } else if (panel.enemies.size() <= 0) {
@@ -302,7 +309,7 @@ public class playerTank extends Tanks {
                     System.out.println(hasKey);
                     break;
                 case "Mina":
-                    lives-=1;
+                    panel.player.lives--;
                     playerX+=panel.tankSize*2;
                     isBurning=true;
                     break;
@@ -317,7 +324,6 @@ public class playerTank extends Tanks {
         int imageSize = panel.tankSize;
         g2d.drawImage(tankImage, screenX, screenY, imageSize, imageSize, null);
         if(isBurning){
-            System.out.println(2);
             Image icon = new ImageIcon("imgs/fire.gif").getImage();
             g2d.drawImage(icon, screenX, screenY, panel.tankSize, panel.tankSize, null);
             burning(g2d);
