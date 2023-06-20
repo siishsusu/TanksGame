@@ -36,8 +36,7 @@ public class KeyHandler implements KeyListener {
                 right = true;
             } else if (code == KeyEvent.VK_ENTER) {
                 shoot = true;
-                shootAudio.play();
-                shootAudio.timerPlay();
+                shootAudio.sound();
             } else if (code == KeyEvent.VK_SPACE) {
                 pause = true;
                 if (panel.gameState == panel.playState) {
@@ -46,7 +45,7 @@ public class KeyHandler implements KeyListener {
                 }
                 else if (panel.gameState == panel.pauseState) {
                     panel.gameState = panel.playState;
-                    panel.backMusic.play();
+                    panel.backMusic.playMusic();
                 }
             }else if (code == KeyEvent.VK_M) {
                 pause = false;

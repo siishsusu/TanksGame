@@ -478,6 +478,7 @@ public class Interface {
         g2.drawString(text, xText-1, yText-1);
         g2.setColor(Color.red);
         g2.drawString(text, xText, yText);
+
     }
 
     /**
@@ -526,14 +527,7 @@ public class Interface {
     }
 
     private void marketScreen() {
-        g2.drawImage(hangar, 0, 0, panel.screenWidth, panel.screenHeight, null);
         String marketName = "Market";
-        g2.setColor(Color.WHITE);
-        g2.setFont(vampireWars.deriveFont(80f));
-        int textLength = (int) g2.getFontMetrics().getStringBounds(marketName, g2).getWidth();
-        int xText = panel.screenWidth / 2 - textLength / 2;
-        int yText = panel.screenHeight / 2;
-        g2.drawString(marketName, xText, yText);
 
         int frameX = panel.tankSize * 2, frameY = panel.tankSize, frameWidth = panel.tankSize * 12, frameHeight = panel.tankSize * 9;
         float opacity = 0.5f; // 50% opacity
@@ -544,76 +538,16 @@ public class Interface {
         g2.fillRoundRect(frameX, frameY, frameWidth, frameHeight, 35, 35);
         g2.setComposite(previousComposite);
 
-        String text = "Player's tank character status";
-        g2.setColor(Color.black);
-        g2.setFont(retroGaming.deriveFont(30f));
-        xText = centredX(text);
-        yText = (int) (panel.tankSize * 1.5);
-        g2.drawString(text, xText - 1, yText - 1);
+        g2.drawImage(hangar, 0, 0, panel.screenWidth, panel.screenHeight, null);
+        g2.setFont(vampireWars.deriveFont(80f));
+        int textLength = (int) g2.getFontMetrics().getStringBounds(marketName, g2).getWidth();
+        int xText = panel.screenWidth / 2 - textLength / 2;
+        int yText = panel.screenHeight / 2;
         g2.setColor(Color.WHITE);
-        g2.drawString(text, xText, yText);
+        g2.drawString(marketName, xText, yText);
 
-        text = "Level: " + panel.level;
-        g2.setColor(Color.black);
-        g2.setFont(retroGaming.deriveFont(30f));
-        xText = frameX + panel.tankSize / 2;
-        yText = (int) (panel.tankSize * 2.5);
-        g2.drawString(text, xText - 1, yText - 1);
-        g2.setColor(Color.WHITE);
-        g2.drawString(text, xText, yText);
 
-        text = "Lives: " + panel.player.lives + "/" + panel.player.maxLives;
-        g2.setColor(Color.black);
-        g2.setFont(retroGaming.deriveFont(30f));
-        xText = frameX + panel.tankSize / 2;
-        yText = (int) (panel.tankSize * 3.5);
-        g2.drawString(text, xText - 1, yText - 1);
-        g2.setColor(Color.WHITE);
-        g2.drawString(text, xText, yText);
 
-        text = "Energy: " + panel.player.energy + "/" + panel.player.maxEnergy;
-        g2.setColor(Color.black);
-        g2.setFont(retroGaming.deriveFont(30f));
-        xText = frameX + panel.tankSize / 2;
-        yText = (int) (panel.tankSize * 4.5);
-        g2.drawString(text, xText - 1, yText - 1);
-        g2.setColor(Color.WHITE);
-        g2.drawString(text, xText, yText);
 
-        text = "Speed: " + panel.player.playerSpeed;
-        g2.setColor(Color.black);
-        g2.setFont(retroGaming.deriveFont(30f));
-        xText = frameX + panel.tankSize / 2;
-        yText = (int) (panel.tankSize * 5.5);
-        g2.drawString(text, xText - 1, yText - 1);
-        g2.setColor(Color.WHITE);
-        g2.drawString(text, xText, yText);
-
-        text = "Coins: " + panel.player.coinsAll;
-        g2.setColor(Color.black);
-        g2.setFont(retroGaming.deriveFont(30f));
-        xText = frameX + panel.tankSize / 2;
-        yText = (int) (panel.tankSize * 6.5);
-        g2.drawString(text, xText - 1, yText - 1);
-        g2.setColor(Color.WHITE);
-        g2.drawString(text, xText, yText);
-
-        text = "Enemies left: " + panel.enemies.size();
-        g2.setColor(Color.black);
-        g2.setFont(retroGaming.deriveFont(30f));
-        xText = frameX + panel.tankSize / 2;
-        yText = (int) (panel.tankSize * 7.5);
-        g2.drawString(text, xText - 1, yText - 1);
-        g2.setColor(Color.WHITE);
-        g2.drawString(text, xText, yText);
-
-        text = "if you want to go back to the menu press M";
-        g2.setColor(Color.black);
-        g2.setFont(retroGaming.deriveFont(30f));
-        xText = centredX(text);
-        yText = (int) (panel.tankSize * 9.5);
-        g2.drawString(text, xText - 1, yText - 1);
-        g2.setColor(Color.red);
-        g2.drawString(text, xText, yText);
     }
 }

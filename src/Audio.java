@@ -61,7 +61,7 @@ public class Audio {
             clip = AudioSystem.getClip();
             clip.open(tr);
             volumeC = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-
+            setVolume();
             if (!this.plAudio) {
                 clip.setFramePosition(0);
                 clip.start();
@@ -78,17 +78,22 @@ public class Audio {
         clip.close();
         plAudio=false;
     }
-    public void setVolume(){
-    if(volume<0) volume=0;
-    if(volume>1) volume=1;
-    float min = volumeC.getMaximum();
-    float max = volumeC.getMaximum();
-    volumeC.setValue((max-min)*(float)volume+min);
+    public void setVolume() {
+        if (volume < 0) volume = 0;
+        if (volume > 1) volume = 1;
+        float min = volumeC.getMinimum();
+        float max = volumeC.getMaximum();
+        volumeC.setValue((max - min) * (float) volume + min);
     }
-    public void repeat(){
+
+    public void loop(){
         if(this.plAudio){
-            clip.loop(10);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
         }
+    }
+    public void playMusic(){
+            play();
+            loop();
     }
     public void timerPlay(){
         if(timerP==0){

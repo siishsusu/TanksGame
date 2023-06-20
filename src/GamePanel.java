@@ -24,10 +24,11 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;
     Audio backMusic;
     TileManager manager = new TileManager(this);
+    public ArrayList<SuperObject> objects= new ArrayList <>();
 
     public GamePanel(){
         backMusic = audioStorage.getTrack(0);
-        backMusic.sound();
+        backMusic.playMusic();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -41,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
     public  void  setupGame(){
         setter.setEnemies();
+        setter.setObjects();
         gameState=titleState;
     }
     public void resetGame(){
@@ -100,13 +102,20 @@ public class GamePanel extends JPanel implements Runnable{
                     tanksList.add(enemies.get(i));
                 }
             }
+
             for(int i = 0; i<projectilesList.size(); i++){
                 if(projectilesList.get(i)!=null){
                     tanksList.add(projectilesList.get(i));
                 }
             }
+
             for(int i = 0; i<tanksList.size(); i++){
                 tanksList.get(i).draw(g2d);
+            }
+            for(int i = 0; i<objects.size(); i++){
+                if(objects.get(i)!=null){
+                    objects.get(i).draw(g2d, this);
+                }
             }
             tanksList.clear();
             ui.draw(g2d);

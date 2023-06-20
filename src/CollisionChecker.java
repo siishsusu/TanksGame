@@ -157,4 +157,73 @@ public class CollisionChecker {
             panel.player.solidCollision.y=panel.player.solidCollisionSetupY;
             return contactPlayer;
     }
+    public int checkObject(Tanks tank, boolean player){
+     int index = 999;
+     for (int i=0; i< panel.objects.size(); i++){
+         if(panel.objects.get(i)!=null) {
+             tank.solidCollision.x = tank.playerX + tank.solidCollision.x;
+             tank.solidCollision.y = tank.playerY + tank.solidCollision.y;
+
+             panel.objects.get(i).solidArea.x = panel.objects.get(i).worldX + panel.objects.get(i).solidArea.x;
+             panel.objects.get(i).solidArea.y = panel.objects.get(i).worldY + panel.objects.get(i).solidArea.y;
+
+             switch (tank.direction){
+                 case "up":
+                     tank.solidCollision.y -= tank.playerSpeed;
+                     if(tank.solidCollision.intersects(panel.objects.get(i).solidArea)){
+                         if (panel.objects.get(i).collision ==true){
+                             tank.isCollided= true;
+                         }
+                         if(player==true){
+                             index = i;
+                         }
+
+                     }
+                     break;
+
+                 case "down":
+                     tank.solidCollision.y += tank.playerSpeed;
+                     if(tank.solidCollision.intersects(panel.objects.get(i).solidArea)){
+                         if (panel.objects.get(i).collision ==true){
+                             tank.isCollided= true;
+                         }
+                         if(player==true){
+                             index = i;
+                         }
+                     }
+                     break;
+                 case "right":
+                     tank.solidCollision.x += tank.playerSpeed;
+                     if(tank.solidCollision.intersects(panel.objects.get(i).solidArea)){
+                         if (panel.objects.get(i).collision ==true){
+                             tank.isCollided= true;
+                         }
+                         if(player==true){
+                             index = i;
+                         }
+                     }
+                     break;
+                 case "left":
+                     tank.solidCollision.x -= tank.playerSpeed;
+                     if(tank.solidCollision.intersects(panel.objects.get(i).solidArea)){
+                         if (panel.objects.get(i).collision ==true){
+                             tank.isCollided= true;
+                         }
+                         if(player==true){
+                             index = i;
+                         }
+                     }
+                     break;
+                }
+
+         tank.solidCollision.x = tank.solidCollisionSetupX;
+         tank.solidCollision.y = tank.solidCollisionSetupY;
+         panel.objects.get(i).solidArea.x = panel.objects.get(i).solidAreaDefaultX;
+         panel.objects.get(i).solidArea.y = panel.objects.get(i).solidAreaDefaultY;
+         }
+     }
+
+     return index;
+
+    }
 }

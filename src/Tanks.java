@@ -20,6 +20,9 @@ public class Tanks {
         setAction();
         isCollided=false;
         panel.checker.collideWithTile(this);
+
+
+
         panel.checker.checkTanks(this, panel.enemies);
         boolean contact = panel.checker.checkPlayer(this);
         //ДОПИСАТИ ПРО КУЛІ

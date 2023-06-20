@@ -15,5 +15,6 @@ public class Main {
         game.setVisible(true);
 
         gamePanel.startGameThread();
+
     }
 }
