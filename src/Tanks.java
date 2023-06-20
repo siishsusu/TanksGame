@@ -1,4 +1,6 @@
+import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class Tanks {
     public int playerX, playerY, playerSpeed, enemySpeed, shootEnemy = 0, spriteNum = 1, actions,
@@ -72,7 +74,6 @@ public class Tanks {
                 case "left": image=left; break;
             }
             if(playerType==2){
-
                 int x=screenX;
                 double oneScale = panel.tankSize/maxLives;
                 double value = oneScale*lives;
@@ -82,10 +83,14 @@ public class Tanks {
                 g2.setColor(Color.green);
                 g2.fillRect(screenX, screenY-15, (int) value, 10);
             }
-            if(dying){
-                dying(g2);
-            }
+
             g2.drawImage(image, screenX, screenY, panel.tankSize, panel.tankSize, null);
+            if(dying){
+                Image icon = new ImageIcon("imgs/explosion.gif").getImage();
+                g2.drawImage(icon, screenX, screenY, panel.tankSize, panel.tankSize, null);
+                dying(g2);
+                //alive=false; dying=false;
+            }
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
     }
@@ -97,7 +102,7 @@ public class Tanks {
      */
     private void dying(Graphics2D g2) {
         dyingCounter ++;
-        if(dyingCounter<=5){
+        /*if(dyingCounter<=5){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
         }else if(dyingCounter>5 && dyingCounter<=10){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
@@ -109,7 +114,7 @@ public class Tanks {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
         }else if(dyingCounter>25 && dyingCounter<=30){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        }
+        }*/
         if(dyingCounter==30){
             dying=false;
             alive=false;

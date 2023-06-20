@@ -161,7 +161,7 @@ public class playerTank extends Tanks{
      * @param enemyIndex чи потрапила куля в ворога
      * @param attack сила удару
      */
-    public void damageEnemy(int enemyIndex, int attack) {
+    public boolean damageEnemy(int enemyIndex, int attack) {
 
         if(enemyIndex!=999){
             System.out.println("hit");
@@ -178,16 +178,19 @@ public class playerTank extends Tanks{
                 if(panel.enemies.get(enemyIndex).lives<=0){
                     panel.enemies.get(enemyIndex).dying = true;
                     coins+= panel.enemies.get(enemyIndex).maxLives*10;
-                    panel.enemies.remove(enemyIndex);
+                //    panel.enemies.remove(enemyIndex);
 
                     if(panel.ui.gameOver==false){
                         panel.ui.showMessage("Танк противника усунено");
                     }
+
+                    return true;
                 }
             }
         }else{
             System.out.println("miss");
         }
+        return false;
     }
 
     public void draw(Graphics2D g2d){
