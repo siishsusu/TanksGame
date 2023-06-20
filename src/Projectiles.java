@@ -2,6 +2,7 @@ public class Projectiles extends Tanks{
     Tanks user;
     AudioStorage au = panel.audioStorage;
     public boolean playerDamaged = false;
+    public int typeProjectiles; //
     public Projectiles(GamePanel panel){
         super(panel);
     }

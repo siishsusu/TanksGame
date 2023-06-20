@@ -1,13 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class playerTank extends Tanks {
     GamePanel panel;
     KeyHandler handler;
     int screenX, screenY;
     Image tankImage = new ImageIcon("imgs/tank-right.png").getImage();
-    int indexOfObj = 999;
-    int hasKey = 0;
 
     public playerTank(GamePanel panel, KeyHandler handler) {
         super(panel);
@@ -37,14 +38,16 @@ public class playerTank extends Tanks {
     /**
      * Налаштовує дефолт гравця
      */
-    public void setDefault() {
+    public void setDefault (){
         setDefaultPosition();
-        playerSpeed = 4;
-        coinsAll = 999;
-        coins = 0;
-        coinsAll += coins;
+        playerSpeed=4;
+        coinsAll=999;
+        coins=0;
+        coinsAll+=coins;
         setDefaultResources();
-        projectiles = new Bullet(panel);
+        bonus=0;
+        if(bonus==0) projectiles = new Bullet(panel);
+        else if(bonus==1) projectiles = new Frostbite(panel);
         getPlayerImage();
     }
 
@@ -169,12 +172,36 @@ public class playerTank extends Tanks {
             }
         }
         if (lives <= 0 || panel.enemies.size() <= 0) {
-            panel.gameState = panel.endState;
-            panel.ui.gameOver = true;
-            if (lives <= 0) {
-                panel.ui.endState = 2;
-            } else if (panel.enemies.size() <= 0) {
-                panel.ui.endState = 1;
+            if(panel.level==1){
+                if (lives <= 0) {
+                    panel.level=1;
+                } else if (panel.enemies.size() <= 0) {
+                    panel.level=2;
+                    panel.openLevel2=true;
+                    panel.manager.loadMap(new File("test.txt"));
+                    panel.setter.setEnemies();
+                    setDefaultPosition();
+                }
+            }else if (panel.level==2){
+                if (lives <= 0) {
+                    panel.level=2;
+                } else if (panel.enemies.size() <= 0) {
+                    panel.level=3;
+                    panel.openLevel3=true;
+                    panel.manager.loadMap(new File("boss-map.txt"));
+                    System.out.println(15);
+                    panel.setter.setEnemies();
+                    setDefaultPosition();
+                }
+            }
+            else if(panel.level==3){
+                panel.gameState = panel.endState;
+                panel.ui.gameOver = true;
+                if (lives <= 0) {
+                    panel.ui.endState = 2;
+                } else if (panel.enemies.size() <= 0) {
+                    panel.ui.endState = 1;
+                }
             }
         }
     }
@@ -185,33 +212,77 @@ public class playerTank extends Tanks {
      * @param enemyIndex чи потрапила куля в ворога
      * @param attack     сила удару
      */
-    public void damageEnemy(int enemyIndex, int attack) {
+    public boolean damageEnemy(int enemyIndex, int attack) {
 
-        if (enemyIndex != 999) {
+        if(enemyIndex!=999){
             System.out.println("hit");
-            if (!panel.enemies.get(enemyIndex).invincible) {
-                invincible = true;
-                int damage = attack - panel.enemies.get(enemyIndex).defense;
-                if (damage < 0) {
-                    damage = 0;
-                }
-                panel.enemies.get(enemyIndex).lives -= damage;
-                panel.enemies.get(enemyIndex).invincible = false;
-                panel.enemies.get(enemyIndex).reactEnemy();
-
-                if (panel.enemies.get(enemyIndex).lives <= 0) {
-                    panel.enemies.get(enemyIndex).dying = true;
-                    coins += panel.enemies.get(enemyIndex).maxLives * 10;
-                    panel.enemies.remove(enemyIndex);
-
-                    if (panel.ui.gameOver == false) {
-                        panel.ui.showMessage("Танк противника усунено");
+            if(!panel.enemies.get(enemyIndex).invincible){
+                invincible=true;
+                if(projectiles.typeProjectiles==1){
+                    int damage = attack - panel.enemies.get(enemyIndex).defense;
+                    if (damage < 0) {
+                        damage = 0;
                     }
+                    panel.enemies.get(enemyIndex).lives -= damage;
+                    panel.enemies.get(enemyIndex).invincible = false;
+                    panel.enemies.get(enemyIndex).reactEnemy();
+
+                    if (panel.enemies.get(enemyIndex).lives <= 0) {
+                        panel.enemies.get(enemyIndex).dying = true;
+                        coins += panel.enemies.get(enemyIndex).maxLives * 10;
+
+                        if (panel.ui.gameOver == false) {
+                            panel.ui.showMessage("Танк противника усунено");
+                        }
+
+                        return true;
+                    }
+                }else if(bonus==1){
+                    //заморожувальний снаряд
+                    unFroze(enemyIndex);
+                    int damage = attack - panel.enemies.get(enemyIndex).defense;
+                    if (damage < 0) {
+                        damage = 0;
+                    }
+                    panel.enemies.get(enemyIndex).lives -= damage;
+                    panel.enemies.get(enemyIndex).invincible = false;
+                    panel.enemies.get(enemyIndex).reactEnemy();
+
+                    if (panel.enemies.get(enemyIndex).lives <= 0) {
+                        panel.enemies.get(enemyIndex).dying = true;
+                        coins += panel.enemies.get(enemyIndex).maxLives * 10;
+
+                        if (panel.ui.gameOver == false) {
+                            panel.ui.showMessage("Танк противника усунено");
+                        }
+
+                        return true;
+                    }
+                }else if(bonus==2){
+                    //
                 }
             }
-        } else {
+        }else{
             System.out.println("miss");
         }
+        return false;
+    }
+    private void unFroze(int enemyIndex) {
+        panel.enemies.get(enemyIndex).playerSpeed=0;
+        panel.enemies.get(enemyIndex).isFrozen=true;
+        panel.enemies.get(enemyIndex).getFrozen();
+        java.util.Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                panel.enemies.get(enemyIndex).isFrozen = false;
+                panel.enemies.get(enemyIndex).getEnemyImage();
+                panel.enemies.get(enemyIndex).playerSpeed=panel.enemies.get(enemyIndex).enemySpeed;
+                panel.enemies.get(enemyIndex).setAction();
+            }
+        };
+        long delay = 10000;
+        timer.schedule(task, delay);
     }
 
     public void pickUpObj(int index) {
@@ -230,6 +301,11 @@ public class playerTank extends Tanks {
                     }
                     System.out.println(hasKey);
                     break;
+                case "Mina":
+                    lives-=1;
+                    playerX+=panel.tankSize*2;
+                    isBurning=true;
+                    break;
             }
         }
     }
@@ -240,5 +316,11 @@ public class playerTank extends Tanks {
         panel.manager.draw(g2d);
         int imageSize = panel.tankSize;
         g2d.drawImage(tankImage, screenX, screenY, imageSize, imageSize, null);
+        if(isBurning){
+            System.out.println(2);
+            Image icon = new ImageIcon("imgs/fire.gif").getImage();
+            g2d.drawImage(icon, screenX, screenY, panel.tankSize, panel.tankSize, null);
+            burning(g2d);
+        }
     }
 }

@@ -6,7 +6,8 @@ public class UsualTurret extends Tanks {
         super(panel);
         playerType = 2;
 
-        playerSpeed = 0;
+        enemySpeed = 0;
+        playerSpeed=enemySpeed;
         setLives(1);
         projectiles = new Bullet(panel);
         alive = true;
@@ -34,12 +35,10 @@ public class UsualTurret extends Tanks {
         } else if (panel.level == 3) {
             //зміни для 3 рівня
         }
-
-
         Random random = new Random();
         int rand = random.nextInt(160);
         shootEnemy = rand;
-        if (shootEnemy == 150 || shootEnemy==34) {
+        if ((shootEnemy == 150 || shootEnemy==34) && !isFrozen) {
             projectiles.set(playerX, playerY, direction, this, true);
             panel.projectilesList.add(projectiles);
 

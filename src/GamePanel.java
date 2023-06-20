@@ -122,7 +122,6 @@ public class GamePanel extends JPanel implements Runnable{
             }
             tanksList.clear();
             ui.draw(g2d);
-
         }
 
     }

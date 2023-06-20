@@ -1,18 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 public class Tanks {
     public int playerX, playerY, playerSpeed, enemySpeed, shootEnemy = 0, spriteNum = 1, actions,
             solidCollisionSetupX, solidCollisionSetupY, invincibleCounter = 0, attack, playerType, coinsAll, coins;;
     public Rectangle solidCollision = new Rectangle(), attackArea =  new Rectangle();
-    public boolean isCollided = false, isBreakable = false, isLivesDown = false, alive = true, invincible = false;
+    public boolean isCollided = false, isBreakable = false, isLivesDown = false, alive = true, invincible = false, isFrozen, isBurning;
+    int bonus; //0 - нічого, 1 - заморожування, 2 - рікошет
     protected int defense;
+    int type;
     protected boolean dying = false;
     String direction = "left";
     public int lives, maxLives, energy, maxEnergy;
     public Projectiles projectiles;
     public Image up, down, left, right;
+    int indexOfObj = 999;
+    int hasKey = 0;
     GamePanel panel;
     public Tanks(GamePanel panel) {
         this.panel=panel;
@@ -23,8 +26,6 @@ public class Tanks {
         isCollided=false;
         panel.checker.collideWithTile(this);
 
-
-
         panel.checker.checkTanks(this, panel.enemies);
         boolean contact = panel.checker.checkPlayer(this);
         //ДОПИСАТИ ПРО КУЛІ
@@ -34,7 +35,7 @@ public class Tanks {
 //                panel.player.lives--;
             }
         }
-        if(isCollided==false){
+        if(isCollided==false && isFrozen==false){
             switch (direction){
                 case "up": playerY -= playerSpeed; break;
                 case "down": playerY += playerSpeed; break;
@@ -51,6 +52,30 @@ public class Tanks {
     public void setLives(int number){
         maxLives=number;
         lives=maxLives;
+    }
+    public void getFrozen() {
+        up = new ImageIcon("imgs/ice.png").getImage();
+        down = up;
+        right = up;
+        left = up;
+    }
+    public void getEnemyImage() {
+        switch (type){
+            case 1:{
+                up = new ImageIcon("imgs/enemy-tank-up-1.png").getImage();
+                down = new ImageIcon("imgs/enemy-tank-down-1.png").getImage();
+                right = new ImageIcon("imgs/enemy-tank-right-1.png").getImage();
+                left = new ImageIcon("imgs/enemy-tank-left-1.png").getImage();
+                break;
+            }
+            case 2:{
+                up = new ImageIcon("imgs/enemy-tank-up.png").getImage();
+                down = new ImageIcon("imgs/enemy-tank-down.png").getImage();
+                right = new ImageIcon("imgs/enemy-tank-right.png").getImage();
+                left = new ImageIcon("imgs/enemy-tank-left.png").getImage();
+                break;
+            }
+        }
     }
 
     /**
@@ -92,7 +117,6 @@ public class Tanks {
                 Image icon = new ImageIcon("imgs/explosion.gif").getImage();
                 g2.drawImage(icon, screenX, screenY, panel.tankSize, panel.tankSize, null);
                 dying(g2);
-                //alive=false; dying=false;
             }
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
@@ -103,24 +127,20 @@ public class Tanks {
      * @param g2
      * Анімація вмирання танка (моргання)
      */
-    private void dying(Graphics2D g2) {
+    void dying(Graphics2D g2) {
         dyingCounter ++;
-        /*if(dyingCounter<=5){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
-        }else if(dyingCounter>5 && dyingCounter<=10){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        }else if(dyingCounter>10 && dyingCounter<=15){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
-        }else if(dyingCounter>15 && dyingCounter<=20){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        }else if(dyingCounter>20 && dyingCounter<=25){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
-        }else if(dyingCounter>25 && dyingCounter<=30){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        }*/
         if(dyingCounter==30){
             dying=false;
             alive=false;
+            isBurning=false;
+            dyingCounter=0;
+        }
+    }
+    void burning(Graphics2D g2) {
+        dyingCounter ++;
+        if(dyingCounter==350){
+            isBurning=false;
+            dyingCounter=0;
         }
     }
 

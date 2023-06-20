@@ -17,7 +17,9 @@ public class TileManager {
         tile = new Tile[10];
         mapTileNum = new int[panel.maxWorldCol][panel.maxWorldRow];
         getTileImage();
-        loadMap();
+        if(panel.level==1) loadMap(new File("map2d.txt"));
+        else if(panel.level==2 && panel.openLevel2) loadMap(new File("test.txt"));
+        else if(panel.level==3 && panel.openLevel3) loadMap(new File("boss-map.txt"));
     }
 
     public void getTileImage() {
@@ -52,10 +54,9 @@ public class TileManager {
         tile[9].collide = true;
 
     }
-
-    public void loadMap() {
+    File fe;
+    public void loadMap(File fe) {
         try {
-            File fe = new File("map2d.txt");
             FileInputStream fis = new FileInputStream(fe);
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
 

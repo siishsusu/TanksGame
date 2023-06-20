@@ -3,13 +3,14 @@ import java.awt.*;
 import java.util.Random;
 
 public class enemyTanks extends Tanks{
-    int type;
+
     public enemyTanks(GamePanel panel, int type) {
         super(panel);
         playerType = 2;
         this.type= type;
-        playerSpeed=2;
-        setLives(1);
+        enemySpeed = 2;
+        playerSpeed=enemySpeed;
+        setLives(3);
         projectiles = new Bullet(panel);
         alive=true;
 
@@ -20,28 +21,7 @@ public class enemyTanks extends Tanks{
         solidCollisionSetupX = solidCollision.x;
         solidCollisionSetupY = solidCollision.y;
 
-        getEnemyImage();
-    }
-
-
-
-    public void getEnemyImage() {
-        switch (type){
-        case 1:{
-            up = new ImageIcon("imgs/enemy-tank-up-1.png").getImage();
-            down = new ImageIcon("imgs/enemy-tank-down-1.png").getImage();
-            right = new ImageIcon("imgs/enemy-tank-right-1.png").getImage();
-            left = new ImageIcon("imgs/enemy-tank-left-1.png").getImage();
-            break;
-        }
-            case 2:{
-                up = new ImageIcon("imgs/enemy-tank-up.png").getImage();
-                down = new ImageIcon("imgs/enemy-tank-down.png").getImage();
-                right = new ImageIcon("imgs/enemy-tank-right.png").getImage();
-                left = new ImageIcon("imgs/enemy-tank-left.png").getImage();
-                break;
-            }
-     }
+        if(!isFrozen)getEnemyImage();
     }
     public void setAction(){
         if(panel.level==2) {
@@ -49,28 +29,67 @@ public class enemyTanks extends Tanks{
         }else if(panel.level==3) {
             //зміни для 3 рівня
         }
-        if(alive){
-            actions++;
-            if(actions==120){
-                Random random = new Random();
-                int rand = random.nextInt(100)+1;
+        if(alive && !isFrozen){
+            if(panel.level==1){
+                actions++;
+                if (actions == 120) {
+                    Random random = new Random();
+                    int rand = random.nextInt(100) + 1;
 
-                if(rand<=25) direction = "up";
-                else if(rand>25 && rand<=50) direction = "down";
-                else if(rand>50 && rand<=75) direction = "right";
-                else if(rand>75 && rand<=100) direction = "left";
+                    if (rand <= 25) direction = "up";
+                    else if (rand > 25 && rand <= 50) direction = "down";
+                    else if (rand > 50 && rand <= 75) direction = "right";
+                    else if (rand > 75 && rand <= 100) direction = "left";
 
-                actions=0;
+                    actions = 0;
+                }
+                shootEnemy++;
+                if (shootEnemy == 150 && !isFrozen) {
+                    projectiles.set(playerX, playerY, direction, this, true);
+                    panel.projectilesList.add(projectiles);
+
+                    shootEnemy = 0;
+                }
+            }else if(panel.level==2){
+                shootEnemy++;
+                if (shootEnemy == 150 && !isFrozen) {
+                    projectiles.set(playerX, playerY, direction, this, true);
+                    panel.projectilesList.add(projectiles);
+                    if (projectiles.playerDamaged) {
+                        projectiles.set(playerX, playerY, direction, this, true);
+                        panel.projectilesList.add(projectiles);
+                        playerSpeed=0;
+                    }
+                    playerSpeed=enemySpeed;
+                    shootEnemy = 0;
+                }
             }
         }else{
-
+            playerSpeed=enemySpeed;
         }
-        shootEnemy++;
-        if(shootEnemy==150){
-            projectiles.set(playerX,playerY,direction,this,true);
-            panel.projectilesList.add(projectiles);
+    }
+    public void pickUpObj(int index) {
+        if (index != 999) {
+            String objName = panel.objects.get(index).name;
+            switch (objName) {
+                case "Key":
+                    hasKey++;
+                    panel.objects.set(index, null);
+                    break;
 
-            shootEnemy=0;
+                case "Door":
+                    if (hasKey > 0) {
+                        panel.objects.set(index, null);
+                        hasKey--;
+                    }
+                    System.out.println(hasKey);
+                    break;
+                case "Mina":
+                    lives-=1;
+                    playerX+=panel.tankSize*2;
+                    isBurning=true;
+                    break;
+            }
         }
     }
 }

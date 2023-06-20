@@ -81,7 +81,7 @@ public class Turrets extends Tanks {
         }
     }
     int dyingCounter = 0;
-    private void dying(Graphics2D g2) {
+    public void dying(Graphics2D g2) {
         dyingCounter ++;
         if(dyingCounter<=5){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));

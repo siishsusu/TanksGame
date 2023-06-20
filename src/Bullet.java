@@ -6,6 +6,9 @@ public class Bullet extends Projectiles{
     GamePanel panel;
     public Bullet(GamePanel panel){
         super(panel);
+
+        typeProjectiles=1;
+
         alive=false;
         direction="right";
         playerSpeed = 7;
@@ -33,6 +36,9 @@ public class Bullet extends Projectiles{
         right = new ImageIcon("imgs/bulletLeft.png").getImage();
         left = new ImageIcon("imgs/bulletRight.png").getImage();
     }
+    /**
+     * Геттер для отримання зображення ракети
+     */
     public void getRocket(){
         up = new ImageIcon("imgs/rocket-up.png").getImage();
         down = new ImageIcon("imgs/rocket-down.png").getImage();
