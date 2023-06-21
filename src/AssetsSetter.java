@@ -7,11 +7,62 @@ public class AssetsSetter {
         this.panel=panel;
     }
     public void setEnemies(){
-        panel.enemies.add(new enemyTanks(panel, 1));
-        panel.enemies.get(0).playerX=panel.tankSize*24;
-        panel.enemies.get(0).playerY=panel.tankSize*17;
+        if(panel.level==1){
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(0).playerX=panel.tankSize*24;
+            panel.enemies.get(0).playerY=panel.tankSize*6;
+            panel.enemies.get(0).projectiles.lives=30;
 
-        if(panel.level==3 && panel.openLevel3){
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(1).playerX=panel.tankSize*25;
+            panel.enemies.get(1).playerY=panel.tankSize*6;
+            panel.enemies.get(1).projectiles.lives=30;
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(2).playerX=panel.tankSize*26;
+            panel.enemies.get(2).playerY=panel.tankSize*6;
+            panel.enemies.get(2).setLives(5);
+            panel.enemies.get(2).projectiles.lives=30;
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(3).playerX=panel.tankSize*27;
+            panel.enemies.get(3).playerY=panel.tankSize*6;
+            panel.enemies.get(3).setLives(1);
+            panel.enemies.get(3).projectiles.lives=30;
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(4).playerX=panel.tankSize*23;
+            panel.enemies.get(4).playerY=panel.tankSize*6;
+            panel.enemies.get(3).projectiles.lives=30;
+        }else if(panel.level==2){
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(0).playerX=panel.tankSize*24;
+            panel.enemies.get(0).playerY=panel.tankSize*6;
+            panel.enemies.get(0).projectiles.lives=30;
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(1).playerX=panel.tankSize*25;
+            panel.enemies.get(1).playerY=panel.tankSize*6;
+            panel.enemies.get(1).projectiles.lives=30;
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(2).playerX=panel.tankSize*26;
+            panel.enemies.get(2).playerY=panel.tankSize*6;
+            panel.enemies.get(2).setLives(5);
+            panel.enemies.get(2).projectiles.lives=30;
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(3).playerX=panel.tankSize*27;
+            panel.enemies.get(3).playerY=panel.tankSize*6;
+            panel.enemies.get(3).setLives(1);
+            panel.enemies.get(3).projectiles.lives=30;
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(4).playerX=panel.tankSize*23;
+            panel.enemies.get(4).playerY=panel.tankSize*6;
+            panel.enemies.get(3).projectiles.lives=30;
+        }
+        else if(panel.level==3 && panel.openLevel3){
             setEnemiesTimed(23,25);
         }
 //
@@ -32,10 +83,10 @@ public class AssetsSetter {
     public void setObjects(){
         panel.objects.add(new KeyObj());
         panel.objects.get(0).worldX= panel.tankSize*25;
-        panel.objects.get(0).worldY = panel.tankSize*16;
+        panel.objects.get(0).worldY = panel.tankSize*15;
 
         panel.objects.add(new KeyObj());
-        panel.objects.get(1).worldX= panel.tankSize*25;
+        panel.objects.get(1).worldX= panel.tankSize*26;
         panel.objects.get(1).worldY = panel.tankSize*15;
 
         panel.objects.add(new GateObj());

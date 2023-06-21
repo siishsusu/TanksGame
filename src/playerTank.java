@@ -99,6 +99,7 @@ public class playerTank extends Tanks {
     }
     public void armourState(){
         panel.player.projectiles = new Bullet(panel);
+        panel.player.projectiles.getBullet();
         panel.player.bonus=2;
         panel.player.impenetrable=true;
         panel.player.getPlayerImageArmoured();
@@ -297,12 +298,13 @@ public class playerTank extends Tanks {
 
                             return true;
                         }
-                        gotFreezer--;
+
                         if(gotFreezer==0){
                             panel.player.projectiles = new Bullet(panel);
+                            panel.player.projectiles.getBullet();
                             panel.player.bonus=0;
                             panel.player.getPlayerImage();
-                        }
+                        }gotFreezer--;
                     }
                 }else if(bonus==2){
 
@@ -313,10 +315,11 @@ public class playerTank extends Tanks {
             if(bonus==1){
                 if(gotFreezer==0){
                     panel.player.projectiles = new Bullet(panel);
+                    panel.player.projectiles.getBullet();
                     panel.player.bonus=0;
                     panel.player.getPlayerImage();
                 }
-                gotFreezer--;
+//                gotFreezer--;
             }
         }
         return false;

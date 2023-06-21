@@ -28,6 +28,7 @@ public class Tanks {
 
         panel.checker.checkTanks(this, panel.enemies);
         boolean contact = panel.checker.checkPlayer(this);
+        panel.checker.checkObject(this, false);
         //ДОПИСАТИ ПРО КУЛІ
         if(contact && playerType==2){
             if(!panel.player.invincible){
@@ -108,7 +109,9 @@ public class Tanks {
                 g2.setColor(Color.black);
                 g2.drawRect(screenX-1, screenY-16, panel.tankSize+2, 12);
 
-                g2.setColor(Color.green);
+                if(maxLives<=3 && maxLives>1)g2.setColor(Color.green);
+                else if(maxLives>3)g2.setColor(Color.red);
+                else if(maxLives<=1)g2.setColor(Color.blue);
                 g2.fillRect(screenX, screenY-15, (int) value, 10);
             }
 

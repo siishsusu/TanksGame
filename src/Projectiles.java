@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class Projectiles extends Tanks{
     Tanks user;
     AudioStorage au = panel.audioStorage;
@@ -72,5 +74,23 @@ public class Projectiles extends Tanks{
             return true;
         }
         return false;
+    }
+    /**
+     * Геттер для отримання зображення кулі
+     */
+    public void getBullet(){
+        up = new ImageIcon("imgs/bulletDown.png").getImage();
+        down = new ImageIcon("imgs/bulletUp.png").getImage();
+        right = new ImageIcon("imgs/bulletLeft.png").getImage();
+        left = new ImageIcon("imgs/bulletRight.png").getImage();
+    }
+    /**
+     * Геттер для отримання зображення ракети
+     */
+    public void getRocket(){
+        up = new ImageIcon("imgs/rocket-up.png").getImage();
+        down = new ImageIcon("imgs/rocket-down.png").getImage();
+        right = new ImageIcon("imgs/rocket-right.png").getImage();
+        left = new ImageIcon("imgs/rocket-left.png").getImage();
     }
 }
