@@ -11,10 +11,11 @@ public class playerTank extends Tanks {
     boolean impenetrable;
     int gotFreezer, gotArmour;
     Image tankImage = new ImageIcon("imgs/tank-right.png").getImage();
-
+    AudioStorage audioStorage;
     public playerTank(GamePanel panel, KeyHandler handler) {
         super(panel);
         this.panel = panel;
+        audioStorage= panel.audioStorage;
         this.handler = handler;
 
         playerType = 1;
@@ -150,10 +151,11 @@ public class playerTank extends Tanks {
         } else if (panel.level == 3) {
             //зміни для 3 рівня
         }
+        panel.checker.collideWithTile(this);
         if (handler.up == true || handler.down == true || handler.right == true || handler.left == true) {
             isCollided = false;
             isLivesDown = false;
-            panel.checker.collideWithTile(this);
+//            panel.checker.collideWithTile(this);
             panel.checker.checkTanks(this, panel.enemies);
             indexOfObj = panel.checker.checkObject(this, true);
             pickUpObj(indexOfObj);
@@ -191,7 +193,9 @@ public class playerTank extends Tanks {
             }
         }
         if (handler.shoot == true && !projectiles.alive) {
+
             attack();
+            audioStorage.getTrack(6).sound();
             projectiles.set(playerX, playerY, direction, this, true);
             panel.projectilesList.add(projectiles);
         }

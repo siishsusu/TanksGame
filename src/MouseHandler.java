@@ -4,10 +4,10 @@ import java.awt.event.MouseListener;
 
 public class MouseHandler implements MouseListener {
     GamePanel panel;
-    AudioStorage audioStorage;
+    AudioStorage au;
     public MouseHandler(GamePanel panel){
         this.panel=panel;
-        audioStorage = panel.audioStorage;
+        au = panel.audioStorage;
     }
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -16,6 +16,7 @@ public class MouseHandler implements MouseListener {
             if(panel.player.coinsAll>=150){
                 panel.armourCount++;
                 panel.player.coinsAll -= 150;
+                au.getTrack(11).sound();;
             }
             System.out.println(panel.armourCount);
         }
@@ -24,6 +25,7 @@ public class MouseHandler implements MouseListener {
             if(panel.player.coinsAll>=20){
                 panel.freezerCount++;
                 panel.player.coinsAll -= 20;
+                au.getTrack(11).sound();
             }
             System.out.println(panel.freezerCount);
         }

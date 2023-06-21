@@ -40,7 +40,6 @@ public class KeyHandler implements KeyListener {
                 right = true;
             } else if (code == KeyEvent.VK_ENTER) {
                 shoot = true;
-                shootAudio.sound();
             } else if (code == KeyEvent.VK_SPACE) {
                 pause = true;
                 if (panel.gameState == panel.playState) {
