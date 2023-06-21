@@ -19,7 +19,8 @@ public class Interface {
     Image heartFull = new ImageIcon("imgs/heart_full.png").getImage(), heartHalf = new ImageIcon("imgs/heart_half.png").getImage(),
             heartBlank = new ImageIcon("imgs/heart_blank.png").getImage(), energy = new ImageIcon("imgs/energy.png").getImage(),
             background = new ImageIcon("imgs/background menu.jpg").getImage(), coin = new ImageIcon("imgs/coin.png").getImage(),
-            hangar = new ImageIcon("imgs/hangar menu.jpg").getImage();
+            hangar = new ImageIcon("imgs/hangar menu.jpg").getImage(), key = new ImageIcon("imgs/key.png").getImage(),
+            freezerImage = new ImageIcon("imgs/freezer.png").getImage(), armourImage = new ImageIcon("imgs/armory.png").getImage();
 
     private Graphics2D g2;
 
@@ -45,6 +46,24 @@ public class Interface {
 //            g2.drawString("Timer: " + format.format(playTime), (int) (panel.tankSize * 12.5), 65);
             g2.drawString("x" + panel.player.coins, (int) (panel.tankSize * 14), 75);
             g2.drawImage(coin, (int) (panel.tankSize * 13.2), 30, panel.tankSize, panel.tankSize, null);
+
+            g2.drawString("x" + panel.player.hasKey, (int) (panel.tankSize * 14), 70+75);
+            g2.drawImage(key, (int) (panel.tankSize * 13.2), 100, panel.tankSize, panel.tankSize, null);
+
+            if (panel.player.gotFreezer>0 && panel.player.gotArmour==0){
+                g2.drawString("x" + panel.player.gotFreezer, (int) (panel.tankSize * 14), 140 + 75);
+                g2.drawImage(freezerImage, (int) (panel.tankSize * 13.2), 170, panel.tankSize, panel.tankSize, null);
+            }else if (panel.player.gotFreezer==0 && panel.player.gotArmour>0){
+                g2.drawString("x" + panel.player.gotArmour, (int) (panel.tankSize * 14), 140 + 75);
+                g2.drawImage(armourImage, (int) (panel.tankSize * 13.2), 170, panel.tankSize, panel.tankSize, null);
+            }else if (panel.player.gotFreezer>0 && panel.player.gotArmour>0){
+                g2.drawString("x" + panel.player.gotFreezer, (int) (panel.tankSize * 14), 140 + 75);
+                g2.drawImage(freezerImage, (int) (panel.tankSize * 13.2), 170, panel.tankSize, panel.tankSize, null);
+
+                g2.drawString("x" + panel.player.gotArmour, (int) (panel.tankSize * 14), 210 + 75);
+                g2.drawImage(armourImage, (int) (panel.tankSize * 13.2), 240, panel.tankSize, panel.tankSize, null);
+            }
+
             if (messageOn == true) {
                 g2.setFont(g2.getFont().deriveFont(30F));
                 g2.drawString(message, panel.tankSize / 2, panel.tankSize * 5);
@@ -64,6 +83,11 @@ public class Interface {
         }
         else if (panel.gameState == panel.marketState) {
             marketScreen();
+        }else if (panel.gameState == panel.inventoryState) {
+            inventoryScreen();
+        }
+        else if (panel.gameState == panel.rulesState) {
+            rulesScreen();
         }
     }
 
@@ -480,6 +504,79 @@ public class Interface {
         g2.drawString(text, xText, yText);
 
     }
+    public void inventoryScreen() {
+        int xText, yText;
+
+        int frameX = panel.screenWidth/2-panel.tankSize*2-20, frameY = panel.screenHeight/2-panel.tankSize*2, frameWidth = panel.tankSize*4+40, frameHeight = panel.tankSize*2;
+        float opacity = 0.5f; // 50% opacity
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+        Composite previousComposite = g2.getComposite();
+        g2.setComposite(alphaComposite);
+        g2.setColor(Color.black);
+        g2.fillRoundRect(frameX, frameY, frameWidth, frameHeight, 35, 35);
+        g2.setComposite(previousComposite);
+
+        String text = "Inventory";
+        g2.setColor(Color.black);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = centredX(text);
+        yText = frameY+panel.tankSize/2;
+        g2.drawString(text, xText-1, yText-1);
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, xText, yText);
+
+        int xOneItem = frameX+5; int yOneItem = (int) (frameY+panel.tankSize/1.5);
+        int xDiff = panel.tankSize+10; int yItem = yOneItem;
+
+        opacity = 0.5f; // 50% opacity
+        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+        g2.setComposite(alphaComposite);
+        g2.setColor(Color.black);
+        g2.fillRoundRect(xOneItem, yOneItem, panel.tankSize, panel.tankSize, 35, 35);
+        g2.setComposite(previousComposite);
+        g2.drawImage(freezerImage, xOneItem, yOneItem, panel.tankSize, panel.tankSize, null);
+        text = String.valueOf(panel.freezerCount);
+        g2.setColor(Color.WHITE);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = xOneItem + panel.tankSize/2 - g2.getFontMetrics().stringWidth(text)/2;
+        yText = yOneItem + panel.tankSize/2 + g2.getFontMetrics().getHeight()/2-5;
+        g2.drawString(text, xText, yText);
+
+        opacity = 0.5f; // 50% opacity
+        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+        g2.setComposite(alphaComposite);
+        g2.setColor(Color.black);
+        g2.fillRoundRect(xOneItem+xDiff, yOneItem, panel.tankSize, panel.tankSize, 35, 35);
+        g2.setComposite(previousComposite);
+        g2.drawImage(armourImage, xOneItem+xDiff, yOneItem, panel.tankSize, panel.tankSize, null);
+        text = String.valueOf(panel.armourCount);
+        g2.setColor(Color.WHITE);
+        g2.setFont(retroGaming.deriveFont(30f));
+        xText = xOneItem + xDiff + panel.tankSize/2 - g2.getFontMetrics().stringWidth(text)/2;
+        yText = yOneItem + panel.tankSize/2 + g2.getFontMetrics().getHeight()/2 - 5;
+        g2.drawString(text, xText, yText);
+
+        opacity = 0.5f; // 50% opacity
+        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+        g2.setComposite(alphaComposite);
+        g2.setColor(Color.black);
+        g2.fillRoundRect(xOneItem+xDiff*2, yOneItem, panel.tankSize, panel.tankSize, 35, 35);
+        g2.setComposite(previousComposite);
+
+        opacity = 0.5f; // 50% opacity
+        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+        g2.setComposite(alphaComposite);
+        g2.setColor(Color.black);
+        g2.fillRoundRect(xOneItem+xDiff*3, yOneItem, panel.tankSize, panel.tankSize, 35, 35);
+        g2.setComposite(previousComposite);
+
+    }
+    public void rulesScreen() {
+        Image rules = new ImageIcon("imgs/rules game.png").getImage();
+
+        g2.drawImage(rules, 0, 0, panel.screenWidth, panel.screenHeight, null);
+    }
+
 
     /**
      * Відмальовування енергії гравця
@@ -547,5 +644,11 @@ public class Interface {
         g2.drawString(marketName, xText, yText);
         Image marketImage = new ImageIcon("imgs/market.png").getImage();
         g2.drawImage(marketImage, 0, 0, panel.tankSize*16, panel.tankSize*11, null);
+
+        g2.setFont(retroGaming.deriveFont(30f));
+        g2.setColor(Color.white);
+        if(panel.player.coinsAll<20)g2.setColor(Color.red);
+        g2.drawString("x" + panel.player.coinsAll, (int) (panel.tankSize * 14), 75);
+        g2.drawImage(coin, (int) (panel.tankSize * 13.2), 30, panel.tankSize, panel.tankSize, null);
     }
 }

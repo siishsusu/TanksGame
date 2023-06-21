@@ -8,6 +8,8 @@ public class playerTank extends Tanks {
     GamePanel panel;
     KeyHandler handler;
     int screenX, screenY;
+    boolean impenetrable;
+    int gotFreezer, gotArmour;
     Image tankImage = new ImageIcon("imgs/tank-right.png").getImage();
 
     public playerTank(GamePanel panel, KeyHandler handler) {
@@ -45,7 +47,6 @@ public class playerTank extends Tanks {
         coins=0;
         coinsAll+=coins;
         setDefaultResources();
-        bonus=0;
         if(bonus==0) projectiles = new Bullet(panel);
         else if(bonus==1) projectiles = new Frostbite(panel);
         getPlayerImage();
@@ -77,6 +78,35 @@ public class playerTank extends Tanks {
         down = new ImageIcon("imgs/tank-down.png").getImage();
         right = new ImageIcon("imgs/tank-right.png").getImage();
         left = new ImageIcon("imgs/tank-left.png").getImage();
+    }
+    public void getPlayerImageFrozen() {
+        up = new ImageIcon("imgs/tank-up-freeze.png").getImage();
+        down = new ImageIcon("imgs/tank-down-freeze.png").getImage();
+        right = new ImageIcon("imgs/tank-right-freeze.png").getImage();
+        left = new ImageIcon("imgs/tank-left-freeze.png").getImage();
+    }
+    public void getPlayerImageArmoured() {
+        //картинки для непробивного танку
+        up = new ImageIcon("imgs/tank-up-freeze.png").getImage();
+        down = new ImageIcon("imgs/tank-down-freeze.png").getImage();
+        right = new ImageIcon("imgs/tank-right-freeze.png").getImage();
+        left = new ImageIcon("imgs/tank-left-freeze.png").getImage();
+    }
+    public void freezerState(){
+        panel.player.projectiles = new Frostbite(panel);
+        panel.player.bonus=1;
+        panel.player.getPlayerImageFrozen();
+    }
+    public void armourState(){
+        panel.player.projectiles = new Bullet(panel);
+        panel.player.bonus=2;
+        panel.player.impenetrable=true;
+        panel.player.getPlayerImageArmoured();
+        if(gotArmour==0){
+            panel.player.bonus=0;
+            panel.player.impenetrable=false;
+            panel.player.getPlayerImage();
+        }
     }
 
     /**
@@ -237,6 +267,7 @@ public class playerTank extends Tanks {
                     if (panel.enemies.get(enemyIndex).lives <= 0) {
                         panel.enemies.get(enemyIndex).dying = true;
                         coins += panel.enemies.get(enemyIndex).maxLives * 10;
+                        coinsAll+=coins;
 
                         if (panel.ui.gameOver == false) {
                             panel.ui.showMessage("Танк противника усунено");
@@ -244,33 +275,49 @@ public class playerTank extends Tanks {
 
                         return true;
                     }
-                }else if(bonus==1){
+                }else if(bonus==1 ){
                     //заморожувальний снаряд
-                    unFroze(enemyIndex);
-                    int damage = attack - panel.enemies.get(enemyIndex).defense;
-                    if (damage < 0) {
-                        damage = 0;
-                    }
-                    panel.enemies.get(enemyIndex).lives -= damage;
-                    panel.enemies.get(enemyIndex).invincible = false;
-                    panel.enemies.get(enemyIndex).reactEnemy();
-
-                    if (panel.enemies.get(enemyIndex).lives <= 0) {
-                        panel.enemies.get(enemyIndex).dying = true;
-                        coins += panel.enemies.get(enemyIndex).maxLives * 10;
-
-                        if (panel.ui.gameOver == false) {
-                            panel.ui.showMessage("Танк противника усунено");
+                    if(gotFreezer>0){
+                        unFroze(enemyIndex);
+                        int damage = attack - panel.enemies.get(enemyIndex).defense;
+                        if (damage < 0) {
+                            damage = 0;
                         }
+                        panel.enemies.get(enemyIndex).lives -= damage;
+                        panel.enemies.get(enemyIndex).invincible = false;
+                        panel.enemies.get(enemyIndex).reactEnemy();
 
-                        return true;
+                        if (panel.enemies.get(enemyIndex).lives <= 0) {
+                            panel.enemies.get(enemyIndex).dying = true;
+                            coins += panel.enemies.get(enemyIndex).maxLives * 10;
+
+                            if (panel.ui.gameOver == false) {
+                                panel.ui.showMessage("Танк противника усунено");
+                            }
+
+                            return true;
+                        }
+                        gotFreezer--;
+                        if(gotFreezer==0){
+                            panel.player.projectiles = new Bullet(panel);
+                            panel.player.bonus=0;
+                            panel.player.getPlayerImage();
+                        }
                     }
                 }else if(bonus==2){
-                    //
+
                 }
             }
         }else{
             System.out.println("miss");
+            if(bonus==1){
+                if(gotFreezer==0){
+                    panel.player.projectiles = new Bullet(panel);
+                    panel.player.bonus=0;
+                    panel.player.getPlayerImage();
+                }
+                gotFreezer--;
+            }
         }
         return false;
     }
@@ -309,10 +356,17 @@ public class playerTank extends Tanks {
                     System.out.println(hasKey);
                     break;
                 case "Mina":
-                    panel.player.lives--;
-                    playerX+=panel.tankSize*2;
-                    isBurning=true;
+                    if (gotArmour == 0) {
+                        panel.player.lives--;
+                        playerX += panel.tankSize * 2;
+                        isBurning = true;
+                    } else {
+                        playerX += panel.tankSize * 2;
+                        panel.player.gotArmour--;
+                        panel.player.armourState();
+                    }
                     break;
+
             }
         }
     }

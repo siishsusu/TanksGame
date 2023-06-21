@@ -54,9 +54,14 @@ public class Projectiles extends Tanks{
             if(damage < 0){
                 damage=0;
             }
-            panel.player.lives -= damage;
-            panel.player.invincible = true;
-            panel.player.reactEnemy();
+            if(!panel.player.impenetrable){
+                panel.player.lives -= damage;
+                panel.player.invincible = true;
+                panel.player.reactEnemy();
+            }else if(panel.player.impenetrable){
+                panel.player.gotArmour--;
+                panel.player.armourState();
+            }
 
             if(panel.player.lives<=0){
                 panel.player.dying = true;

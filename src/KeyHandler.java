@@ -20,7 +20,8 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if(panel.gameState==panel.playState || panel.gameState==panel.pauseState|| panel.gameState==panel.marketState){
+        if(panel.gameState==panel.playState || panel.gameState==panel.pauseState || panel.gameState==panel.marketState
+                || panel.gameState==panel.inventoryState || panel.gameState==panel.rulesState){
             if (code == KeyEvent.VK_UP) {
                 a.play();
                 a.timerPlay();
@@ -51,17 +52,29 @@ public class KeyHandler implements KeyListener {
                     panel.backMusic.playMusic();
                 }
             }else if (code == KeyEvent.VK_M) {
+                System.out.println(1111);
                 pause = false;
                     panel.gameState = panel.titleState;
                     panel.ui.titleScreenMode=1;
                     panel.backMusic.play();
             }
-            else if (code == KeyEvent.VK_B) {
+            else if (code == KeyEvent.VK_S) {
                 if (panel.gameState == panel.playState) {
                     panel.gameState = panel.marketState;
                     panel.backMusic.stop();
                 }
                 else if (panel.gameState == panel.marketState) {
+                    panel.gameState = panel.playState;
+                    panel.backMusic.play();
+
+                }
+            }
+            else if (code == KeyEvent.VK_I) {
+                if (panel.gameState == panel.playState) {
+                    panel.gameState = panel.inventoryState;
+                    panel.backMusic.stop();
+                }
+                else if (panel.gameState == panel.inventoryState) {
                     panel.gameState = panel.playState;
                     panel.backMusic.play();
 
@@ -81,7 +94,10 @@ public class KeyHandler implements KeyListener {
                         panel.ui.titleScreenMode=2;
                         panel.ui.menuCommand=0;
                     }
-                    else if(panel.ui.menuCommand==2); //rules
+                    else if(panel.ui.menuCommand==2) {
+                        //rules
+                        panel.gameState=panel.rulesState;
+                    }
                     else if(panel.ui.menuCommand==3) System.exit(0); //exit
                 }else if(panel.ui.titleScreenMode==2){
                     if(panel.ui.menuCommand==0){ //level 1
