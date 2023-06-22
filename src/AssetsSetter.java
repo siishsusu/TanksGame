@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,27 +14,27 @@ public class AssetsSetter {
             panel.enemies.get(0).playerY=panel.tankSize*6;
             panel.enemies.get(0).projectiles.setLives(30);
 
-//            panel.enemies.add(new enemyTanks(panel, 1));
-//            panel.enemies.get(1).playerX=panel.tankSize*25;
-//            panel.enemies.get(1).playerY=panel.tankSize*6;
-//            panel.enemies.get(1).projectiles.setLives(30);
-//
-//            panel.enemies.add(new enemyTanks(panel, 1));
-//            panel.enemies.get(2).playerX=panel.tankSize*26;
-//            panel.enemies.get(2).playerY=panel.tankSize*6;
-//            panel.enemies.get(2).setLives(5);
-//            panel.enemies.get(2).projectiles.setLives(30);
-//
-//            panel.enemies.add(new enemyTanks(panel, 1));
-//            panel.enemies.get(3).playerX=panel.tankSize*27;
-//            panel.enemies.get(3).playerY=panel.tankSize*6;
-//            panel.enemies.get(3).setLives(1);
-//            panel.enemies.get(3).projectiles.setLives(30);
-//
-//            panel.enemies.add(new enemyTanks(panel, 1));
-//            panel.enemies.get(4).playerX=panel.tankSize*23;
-//            panel.enemies.get(4).playerY=panel.tankSize*6;
-//            panel.enemies.get(3).projectiles.setLives(30);
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(1).playerX=panel.tankSize*25;
+            panel.enemies.get(1).playerY=panel.tankSize*6;
+            panel.enemies.get(1).projectiles.setLives(30);
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(2).playerX=panel.tankSize*26;
+            panel.enemies.get(2).playerY=panel.tankSize*6;
+            panel.enemies.get(2).setLives(5);
+            panel.enemies.get(2).projectiles.setLives(30);
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(3).playerX=panel.tankSize*27;
+            panel.enemies.get(3).playerY=panel.tankSize*6;
+            panel.enemies.get(3).setLives(1);
+            panel.enemies.get(3).projectiles.setLives(30);
+
+            panel.enemies.add(new enemyTanks(panel, 1));
+            panel.enemies.get(4).playerX=panel.tankSize*23;
+            panel.enemies.get(4).playerY=panel.tankSize*6;
+            panel.enemies.get(3).projectiles.setLives(30);
         }else if(panel.level==2){
             panel.enemies.add(new enemyTanks(panel, 1));
             panel.enemies.get(0).playerX=panel.tankSize*24;
@@ -60,25 +61,39 @@ public class AssetsSetter {
             panel.enemies.add(new enemyTanks(panel, 1));
             panel.enemies.get(4).playerX=panel.tankSize*23;
             panel.enemies.get(4).playerY=panel.tankSize*6;
-            panel.enemies.get(3).projectiles.lives=30;
+            panel.enemies.get(4).projectiles.lives=30;
+
+            System.out.println(panel.enemies.size());
         }
         else if(panel.level==3 && panel.openLevel3){
-            setEnemiesTimed(23,25);
+            //setEnemiesTimed(23,25);
+            panel.enemies.add(new UsualTurret(panel));
+            panel.enemies.get(0).playerX=panel.tankSize*20;
+            panel.enemies.get(0).playerY=panel.tankSize*28;
+            panel.enemies.get(0).direction="up";
+
+            panel.enemies.add(new UsualTurret(panel));
+            panel.enemies.get(1).playerX=panel.tankSize*22;
+            panel.enemies.get(1).playerY=panel.tankSize*28;
+            panel.enemies.get(1).direction="up";
+
+            panel.enemies.add(new UsualTurret(panel));
+            panel.enemies.get(2).playerX=panel.tankSize*24;
+            panel.enemies.get(2).playerY=panel.tankSize*28;
+            panel.enemies.get(2).direction="up";
+
+            panel.enemies.add(new UsualTurret(panel));
+            panel.enemies.get(3).playerX=panel.tankSize*26;
+            panel.enemies.get(3).playerY=panel.tankSize*28;
+            panel.enemies.get(3).direction="up";
+
+            panel.enemies.add(new UsualTurret(panel));
+            panel.enemies.get(4).playerX=panel.tankSize*27;
+            panel.enemies.get(4).playerY=panel.tankSize*28;
+            panel.enemies.get(4).direction="up";
+
+            setEnemiesTimed(20,6);
         }
-//
-//
-//        panel.enemies.add(new enemyTanks(panel, 2));
-//        panel.enemies.get(1).playerX=panel.tankSize*25;
-//        panel.enemies.get(1).playerY=panel.tankSize*17;
-//
-//        panel.enemies.add(new enemyTanks(panel, 2));
-//        panel.enemies.get(2).playerX=panel.tankSize*26;
-//        panel.enemies.get(2).playerY=panel.tankSize*17;
-//
-//        panel.enemies.add(new UsualTurret(panel));
-//        panel.enemies.get(3).playerX=panel.tankSize*27;
-//        panel.enemies.get(3).playerY=panel.tankSize*17;
-//        panel.enemies.get(3).direction="up";
     }
     public void setObjects(){
         if(panel.level==1){
@@ -124,21 +139,34 @@ public class AssetsSetter {
 
     }
     public void setEnemiesTimed(int x, int y) {
-        //Танки з'являються через певний період часу
-        int maxEnemies = 5;
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
+            int tankCount = 0;
             @Override
             public void run() {
-                if (panel.enemies.size() < maxEnemies) {
+                if (tankCount < 20) {
                     panel.enemies.add(new enemyTanks(panel, 1));
                     panel.enemies.get(panel.enemies.size() - 1).playerX = panel.tankSize * x;
                     panel.enemies.get(panel.enemies.size() - 1).playerY = panel.tankSize * y;
+                    Random random = new Random();
+                    int livesAndSpeed = random.nextInt(5)+1;
+                    panel.enemies.get(panel.enemies.size() - 1).setLives(livesAndSpeed);
+                    panel.enemies.get(panel.enemies.size() - 1).enemySpeed=livesAndSpeed;
+                    if(livesAndSpeed==1) panel.enemies.get(panel.enemies.size() - 1).direction="down";
+                    else if(livesAndSpeed==2)panel.enemies.get(panel.enemies.size() - 1).direction="right";
+                    else if(livesAndSpeed==3)panel.enemies.get(panel.enemies.size() - 1).direction="left";
+                    else if(livesAndSpeed==4 || livesAndSpeed==5)panel.enemies.get(panel.enemies.size() - 1).direction="up";
+                    tankCount++;
+                    System.out.println(tankCount);
+                } else {
+                    timer.cancel();
                 }
             }
         };
+
         long delay = 0;
-        long period = 5000;
+        long period = 10000;
         timer.scheduleAtFixedRate(task, delay, period);
     }
+
 }

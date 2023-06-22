@@ -102,17 +102,17 @@ public class Tanks {
                 case "right": image=right; break;
                 case "left": image=left; break;
             }
-            if(playerType==2){
-                int x=screenX;
-                double oneScale = panel.tankSize/maxLives;
-                double value = oneScale*lives;
+            if(playerType==2) {
+                int x = screenX;
+                double oneScale = panel.tankSize / maxLives;
+                double value = oneScale * lives;
                 g2.setColor(Color.black);
-                g2.drawRect(screenX-1, screenY-16, panel.tankSize+2, 12);
+                g2.drawRect(screenX - 1, screenY - 16, panel.tankSize + 2, 12);
 
-                if(maxLives<=3 && maxLives>1)g2.setColor(Color.green);
-                else if(maxLives>3)g2.setColor(Color.red);
-                else if(maxLives<=1)g2.setColor(Color.blue);
-                g2.fillRect(screenX, screenY-15, (int) value, 10);
+                if (maxLives <= 3 && maxLives > 1) g2.setColor(Color.green);
+                else if (maxLives > 3) g2.setColor(Color.red);
+                else if (maxLives <= 1) g2.setColor(Color.blue);
+                g2.fillRect(screenX, screenY - 15, (int) value, 10);
             }
 
             g2.drawImage(image, screenX, screenY, panel.tankSize, panel.tankSize, null);

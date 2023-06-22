@@ -588,9 +588,16 @@ public class Interface {
         g2.setColor(Color.YELLOW);
         g2.drawRect(x,y*3,300,panel.tankSize/2);
         if(panel.player.lives>0){
-            for (int i = 1; i <= panel.player.energy; i++) {
-                g2.fillRect(x, y * 3, 300 / panel.player.maxEnergy, panel.tankSize / 2);
-                x+=300/panel.player.maxEnergy;
+            if(panel.level==3){
+                for (int i = 1; i <= panel.player.energy; i++) {
+                    float opacity = 0.4f; // 50% opacity
+                    AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+                    Composite previousComposite = g2.getComposite();
+                    g2.setComposite(alphaComposite);
+                    g2.fillRect(x, y * 3, 300 / panel.player.maxEnergy, panel.tankSize / 2);
+                    g2.setComposite(previousComposite);
+                    x += 300 / panel.player.maxEnergy;
+                }
             }
         }
         g2.drawImage(energy, panel.tankSize/2, (int) (y*2.5), panel.tankSize, panel.tankSize, null);

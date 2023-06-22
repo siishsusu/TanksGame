@@ -44,7 +44,7 @@ public class playerTank extends Tanks {
     public void setDefault (){
         setDefaultPosition();
         playerSpeed=4;
-        coinsAll=999;
+        coinsAll=999999;
         coins=0;
         coinsAll+=coins;
         setDefaultResources();
@@ -86,13 +86,6 @@ public class playerTank extends Tanks {
         right = new ImageIcon("imgs/tank-right-freeze.png").getImage();
         left = new ImageIcon("imgs/tank-left-freeze.png").getImage();
     }
-    public void getPlayerImageArmoured() {
-        //картинки для непробивного танку
-        up = new ImageIcon("imgs/tank-up-freeze.png").getImage();
-        down = new ImageIcon("imgs/tank-down-freeze.png").getImage();
-        right = new ImageIcon("imgs/tank-right-freeze.png").getImage();
-        left = new ImageIcon("imgs/tank-left-freeze.png").getImage();
-    }
     public void freezerState(){
         panel.player.projectiles = new Frostbite(panel);
         panel.player.bonus=1;
@@ -103,7 +96,7 @@ public class playerTank extends Tanks {
         panel.player.projectiles.getBullet();
         panel.player.bonus=2;
         panel.player.impenetrable=true;
-        panel.player.getPlayerImageArmoured();
+        panel.player.getPlayerImage();
         if(gotArmour==0){
             panel.player.bonus=0;
             panel.player.impenetrable=false;
@@ -212,7 +205,6 @@ public class playerTank extends Tanks {
                     panel.level=2;
                     panel.openLevel2=true;
                     panel.manager.loadMap(new File("test.txt"));
-                    panel.setter.setEnemies();
                     setDefaultPosition();
                     panel.player.hasKey=0;
                     panel.setupGame();
@@ -228,7 +220,6 @@ public class playerTank extends Tanks {
                     panel.level=3;
                     panel.openLevel3=true;
                     panel.manager.loadMap(new File("boss-map.txt"));
-                    panel.setter.setEnemies();
                     setDefaultPosition();
                     panel.player.hasKey=0;
                     panel.setupGame();
@@ -390,6 +381,15 @@ public class playerTank extends Tanks {
             Image icon = new ImageIcon("imgs/fire.gif").getImage();
             g2d.drawImage(icon, screenX, screenY, panel.tankSize, panel.tankSize, null);
             burning(g2d);
+        }
+        if(panel.player.impenetrable){
+            float opacity = 0.2f; // 50% opacity
+            AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+            Composite previousComposite = g2d.getComposite();
+            g2d.setComposite(alphaComposite);
+            g2d.setColor(Color.green);
+            g2d.fillOval(screenX, screenY, panel.tankSize, panel.tankSize);
+            g2d.setComposite(previousComposite);
         }
     }
 }
