@@ -73,6 +73,8 @@ public class enemyTanks extends Tanks{
                     lives-=1;
                     playerX+=panel.tankSize*2;
                     isBurning=true;
+                    panel.gameOverSound.sound();
+
                     break;
             }
         }

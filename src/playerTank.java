@@ -142,7 +142,6 @@ public class playerTank extends Tanks {
         if (handler.up == true || handler.down == true || handler.right == true || handler.left == true) {
             isCollided = false;
             isLivesDown = false;
-//            panel.checker.collideWithTile(this);
             panel.checker.collideWithTile(this);
             panel.checker.checkTanks(this, panel.enemies);
             indexOfObj = panel.checker.checkObject(this, true);
@@ -356,6 +355,7 @@ public class playerTank extends Tanks {
                     System.out.println(hasKey);
                     break;
                 case "Mina":
+                    panel.gameOverSound.sound();
                     if (gotArmour == 0) {
                         panel.player.lives--;
                         playerX += panel.tankSize * 2;
@@ -365,6 +365,12 @@ public class playerTank extends Tanks {
                         panel.player.gotArmour--;
                         panel.player.armourState();
                     }
+                    break;
+                case "Chest":
+                    panel.objects.set(index, null);
+                    panel.objects.remove(index);
+                    panel.coins.sound();
+                    panel.player.coins+=50;
                     break;
 
             }

@@ -48,14 +48,16 @@ public class KeyHandler implements KeyListener {
                 }
                 else if (panel.gameState == panel.pauseState) {
                     panel.gameState = panel.playState;
-                    panel.backMusic.playMusic();
+                    panel.backMusic.play();
                 }
-            }else if (code == KeyEvent.VK_M) {
+            }else if (code == KeyEvent.VK_M && panel.gameState != panel.marketState) {
                 System.out.println(1111);
                 pause = false;
                     panel.gameState = panel.titleState;
                     panel.ui.titleScreenMode=1;
+                    if(panel.backMusic.isPlaying==false){
                     panel.backMusic.play();
+                    }
             }
             else if (code == KeyEvent.VK_S) {
                 if (panel.gameState == panel.playState) {
@@ -118,6 +120,7 @@ public class KeyHandler implements KeyListener {
                 }else if(panel.ui.titleScreenMode==3){
                     if(panel.ui.menuCommand==0){ //reset game
                         panel.gameState=panel.playState;
+                        panel.audioStorage.getTrack(13).isPlaying = false;
                         panel.resetGame();
                     }
                     else if(panel.ui.menuCommand==1){ //exit game

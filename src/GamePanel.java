@@ -3,6 +3,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable{
+    public Audio coins;
     AudioStorage audioStorage= new AudioStorage();
     public final int orTankSize = 23, scale = 3, tankSize = orTankSize*scale;
     final int maxScreenCol = 16, maxScreenRow = 11;
@@ -24,13 +25,15 @@ public class GamePanel extends JPanel implements Runnable{
     Interface ui = new Interface(this);
     AssetsSetter setter = new AssetsSetter(this);
     int FPS = 60;
-    Audio backMusic;
+    Audio backMusic, gameOverSound;
     TileManager manager = new TileManager(this);
     public ArrayList<SuperObject> objects= new ArrayList <>();
 
     public GamePanel(){
         backMusic = audioStorage.getTrack(0);
-        backMusic.playMusic();
+        backMusic.play();
+        coins = audioStorage.getTrack(14);
+        gameOverSound= audioStorage.getTrack(13);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -52,6 +55,8 @@ public class GamePanel extends JPanel implements Runnable{
         player.setDefault();
         setter.setEnemies();
         player.projectiles.getBullet();
+        gameOverSound.isPlaying=false;
+
     }
     @Override
     public void run() {

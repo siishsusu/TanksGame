@@ -62,7 +62,9 @@ public class MouseHandler implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if ((e.getX() > 330)&&(e.getX() < 505)&&(e.getY() > 575)&&(e.getY() < 630) && panel.gameState == panel.pauseState){
 
+        }
     }
 
     @Override

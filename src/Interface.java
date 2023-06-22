@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 
 public class Interface {
     GamePanel panel;
+    AudioStorage audioStorage;
     public boolean messageOn = false, gameOver = false, loading = false;
     public String message = "";
     public int counter = 0, fill=0, titleScreenMode = 0, menuCommand = 0;
@@ -26,6 +27,7 @@ public class Interface {
 
     public Interface(GamePanel panel) {
         this.panel = panel;
+        audioStorage = panel.audioStorage;
         try {
             vampireWars = Font.createFont(Font.TRUETYPE_FONT, titleFont);
             retroGaming = Font.createFont(Font.TRUETYPE_FONT, mainFont);
@@ -78,6 +80,8 @@ public class Interface {
         } else if (panel.gameState == panel.endState && gameOver) {
             titleScreenMode=3;
             gameOverScreen(g2);
+            if(!panel.audioStorage.getTrack(13).isPlaying)
+                panel.gameOverSound.play();
         } else if (panel.gameState == panel.pauseState) {
             pauseScreen();
         }
@@ -311,6 +315,7 @@ public class Interface {
      */
     private void gameOverScreen(Graphics2D g2) {
         if(titleScreenMode==3) {
+
             panel.enemies.clear();
             float opacity = 0.5f; // 50% opacity
             AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);

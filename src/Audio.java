@@ -11,6 +11,7 @@ public class Audio {
     private long timerP=0;//початковий час звучання
     private long timerD;//к-сть часу звучвання
     private long timerF=0;//кінцевий час звучання
+    public boolean isPlaying=false;
 
     public Audio(String track, double volume) {
         this.track = track;
@@ -48,6 +49,7 @@ public class Audio {
         }
     }
     public void play() {
+        isPlaying=true;
         File audioFile = new File(this.track);
         AudioInputStream tr = null;
         try {
@@ -74,6 +76,7 @@ public class Audio {
         }
     }
         public void stop(){
+        isPlaying=false;
         clip.stop();
         clip.close();
         plAudio=false;
