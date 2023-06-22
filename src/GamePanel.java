@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.addMouseListener(mouseHandler);
         this.setFocusable(true);
         setupGame();
+        gameState=titleState;
     }
     public void startGameThread(){
         gameThread=new Thread(this);
@@ -46,11 +47,11 @@ public class GamePanel extends JPanel implements Runnable{
     public  void  setupGame(){
         setter.setEnemies();
         setter.setObjects();
-        gameState=titleState;
     }
     public void resetGame(){
         player.setDefault();
         setter.setEnemies();
+        player.projectiles.getBullet();
     }
     @Override
     public void run() {

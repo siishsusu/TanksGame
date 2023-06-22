@@ -146,16 +146,11 @@ public class playerTank extends Tanks {
     }
 
     public void update() {
-        if (panel.level == 2) {
-            //зміни для 2 рівня
-        } else if (panel.level == 3) {
-            //зміни для 3 рівня
-        }
-        panel.checker.collideWithTile(this);
         if (handler.up == true || handler.down == true || handler.right == true || handler.left == true) {
             isCollided = false;
             isLivesDown = false;
 //            panel.checker.collideWithTile(this);
+            panel.checker.collideWithTile(this);
             panel.checker.checkTanks(this, panel.enemies);
             indexOfObj = panel.checker.checkObject(this, true);
             pickUpObj(indexOfObj);
@@ -219,6 +214,9 @@ public class playerTank extends Tanks {
                     panel.manager.loadMap(new File("test.txt"));
                     panel.setter.setEnemies();
                     setDefaultPosition();
+                    panel.player.hasKey=0;
+                    panel.setupGame();
+                    panel.ui.showMessage("Ви перейшли на 2 рівень");
                 }
             }else if (panel.level==2){
                 if (lives <= 0) {
@@ -230,9 +228,11 @@ public class playerTank extends Tanks {
                     panel.level=3;
                     panel.openLevel3=true;
                     panel.manager.loadMap(new File("boss-map.txt"));
-                    System.out.println(15);
                     panel.setter.setEnemies();
                     setDefaultPosition();
+                    panel.player.hasKey=0;
+                    panel.setupGame();
+                    panel.ui.showMessage("Ви перейшли на 3 рівень");
                 }
             }
             else if(panel.level==3){
@@ -353,11 +353,13 @@ public class playerTank extends Tanks {
                 case "Key":
                     hasKey++;
                     panel.objects.set(index, null);
+                    panel.objects.remove(index);
                     break;
 
                 case "Door":
                     if (hasKey > 0) {
                         panel.objects.set(index, null);
+                        panel.objects.remove(index);
                         hasKey--;
                     }
                     System.out.println(hasKey);

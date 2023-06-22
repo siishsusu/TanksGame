@@ -30,7 +30,6 @@ public class enemyTanks extends Tanks{
             //зміни для 3 рівня
         }
         if(alive && !isFrozen){
-            if(panel.level==1){
                 actions++;
                 if (actions == 120) {
                     Random random = new Random();
@@ -50,20 +49,6 @@ public class enemyTanks extends Tanks{
 
                     shootEnemy = 0;
                 }
-            }else if(panel.level==2){
-                shootEnemy++;
-                if (shootEnemy == 150 && !isFrozen) {
-                    projectiles.set(playerX, playerY, direction, this, true);
-                    panel.projectilesList.add(projectiles);
-                    if (projectiles.playerDamaged) {
-                        projectiles.set(playerX, playerY, direction, this, true);
-                        panel.projectilesList.add(projectiles);
-                        playerSpeed=0;
-                    }
-                    playerSpeed=enemySpeed;
-                    shootEnemy = 0;
-                }
-            }
         }else{
             playerSpeed=enemySpeed;
         }
