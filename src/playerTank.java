@@ -200,12 +200,16 @@ public class playerTank extends Tanks {
                     panel.ui.gameOver = true;
                     panel.ui.endState = 2;
                     panel.level=1;
+                    panel.manager.loadMap(new File("map2d.txt"));
+                    panel.objects.clear();
+                    panel.setupGame();
                 } else if (panel.enemies.size() <= 0) {
                     panel.level=2;
                     panel.openLevel2=true;
                     panel.manager.loadMap(new File("test.txt"));
                     setDefaultPosition();
                     panel.player.hasKey=0;
+                    panel.objects.clear();
                     panel.setupGame();
                     panel.ui.showMessage("Ви перейшли на 2 рівень");
                 }
@@ -221,6 +225,7 @@ public class playerTank extends Tanks {
                     panel.manager.loadMap(new File("boss-map.txt"));
                     setDefaultPosition();
                     panel.player.hasKey=0;
+                    panel.objects.clear();
                     panel.setupGame();
                     panel.ui.showMessage("Ви перейшли на 3 рівень");
                 }

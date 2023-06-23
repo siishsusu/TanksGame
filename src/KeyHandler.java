@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 public class KeyHandler implements KeyListener {
     public boolean up, down, left, right, shoot, pause;
@@ -103,14 +104,39 @@ public class KeyHandler implements KeyListener {
                 }else if(panel.ui.titleScreenMode==2){
                     if(panel.ui.menuCommand==0){ //level 1
                         panel.level=1;
+                        panel.manager.loadMap(new File("map2d.txt"));
+                        panel.player.setDefaultPosition();
+                        panel.player.hasKey=0;
+                        panel.enemies.clear();
+                        panel.objects.clear();
+                        panel.setupGame();
+                        panel.setter.timer.cancel();
+                        panel.ui.showMessage("Ви перейшли на 1 рівень");
                         panel.gameState=panel.playState;
                     }
                     else if(panel.ui.menuCommand==1 && panel.openLevel2){ //level 2
                         panel.level=2;
+                        panel.openLevel2=true;
+                        panel.manager.loadMap(new File("test.txt"));
+                        panel.player.setDefaultPosition();
+                        panel.player.hasKey=0;
+                        panel.enemies.clear();
+                        panel.objects.clear();
+                        panel.setupGame();
+                        panel.setter.timer.cancel();
+                        panel.ui.showMessage("Ви перейшли на 2 рівень");
                         panel.gameState=panel.playState;
                     }
                     else if(panel.ui.menuCommand==2 && panel.openLevel3){ //level 3
                         panel.level=3;
+                        panel.openLevel3=true;
+                        panel.manager.loadMap(new File("boss-map.txt"));
+                        panel.player.setDefaultPosition();
+                        panel.player.hasKey=0;
+                        panel.enemies.clear();
+                        panel.objects.clear();
+                        panel.setupGame();
+                        panel.ui.showMessage("Ви перейшли на 3 рівень");
                         panel.gameState=panel.playState;
                     }
                     else if(panel.ui.menuCommand==3) {//back
@@ -121,7 +147,11 @@ public class KeyHandler implements KeyListener {
                     if(panel.ui.menuCommand==0){ //reset game
                         panel.gameState=panel.playState;
                         panel.audioStorage.getTrack(13).isPlaying = false;
+                        panel.enemies.clear();
+                        panel.objects.clear();
                         panel.resetGame();
+                        panel.player.hasKey=0;
+                        panel.ui.showMessage("Спробуйте знову");
                     }
                     else if(panel.ui.menuCommand==1){ //exit game
                         System.exit(0);

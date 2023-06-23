@@ -124,6 +124,7 @@ public class CollisionChecker {
         return index;
     }
 
+
     /**
      * @param tank
      * @return false, якщо танк гравця не уражено і true, якщо уражено
@@ -225,5 +226,47 @@ public class CollisionChecker {
 
      return index;
 
+    }
+
+    public int checkEnemyTanks(ArrayList<Tanks> tank, ArrayList<Tanks> enemies) {
+        int index = 999;
+        for(int i = 0; i<enemies.size(); i++) {
+            for (int j = 0; j < enemies.size(); j++) {
+                if (enemies.get(i) != null && tank.get(j) != null) {
+                    tank.get(j).solidCollision.x = tank.get(j).playerX + tank.get(j).solidCollision.x;
+                    tank.get(j).solidCollision.y = tank.get(j).playerY + tank.get(j).solidCollision.y;
+
+                    enemies.get(i).solidCollision.x = enemies.get(i).playerX + enemies.get(i).solidCollision.x;
+                    enemies.get(i).solidCollision.y = enemies.get(i).playerY + enemies.get(i).solidCollision.y;
+
+                    switch (tank.get(j).direction) {
+                        case "up":
+                            tank.get(j).solidCollision.y -= tank.get(j).playerSpeed;
+                            break;
+                        case "down":
+                            tank.get(j).solidCollision.y += tank.get(j).playerSpeed;
+                            break;
+                        case "right":
+                            tank.get(j).solidCollision.x += tank.get(j).playerSpeed;
+                            break;
+                        case "left":
+                            tank.get(j).solidCollision.x -= tank.get(j).playerSpeed;
+                            break;
+                    }
+                    if (tank.get(j).solidCollision.intersects(enemies.get(i).solidCollision)) {
+                        if (enemies.get(i) != tank.get(j)) {
+                            tank.get(j).isCollided = true;
+                            index = i;
+                        }
+                    }
+                    tank.get(j).solidCollision.x = tank.get(j).solidCollisionSetupX;
+                    tank.get(j).solidCollision.y = tank.get(j).solidCollisionSetupY;
+
+                    enemies.get(i).solidCollision.x = enemies.get(i).solidCollisionSetupX;
+                    enemies.get(i).solidCollision.y = enemies.get(i).solidCollisionSetupY;
+                }
+            }
+        }
+        return index;
     }
 }

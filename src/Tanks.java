@@ -27,6 +27,7 @@ public class Tanks {
         panel.checker.collideWithTile(this);
 
         panel.checker.checkTanks(this, panel.enemies);
+        panel.checker.checkEnemyTanks(panel.enemies, panel.enemies);
         boolean contact = panel.checker.checkPlayer(this);
         panel.checker.checkObject(this, false);
         //ДОПИСАТИ ПРО КУЛІ
