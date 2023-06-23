@@ -110,6 +110,7 @@ public class KeyHandler implements KeyListener {
                         panel.enemies.clear();
                         panel.objects.clear();
                         panel.setupGame();
+                        panel.setter.timer.cancel();
                         panel.ui.showMessage("Ви перейшли на 1 рівень");
                         panel.gameState=panel.playState;
                     }
@@ -122,6 +123,7 @@ public class KeyHandler implements KeyListener {
                         panel.enemies.clear();
                         panel.objects.clear();
                         panel.setupGame();
+                        panel.setter.timer.cancel();
                         panel.ui.showMessage("Ви перейшли на 2 рівень");
                         panel.gameState=panel.playState;
                     }
@@ -145,7 +147,11 @@ public class KeyHandler implements KeyListener {
                     if(panel.ui.menuCommand==0){ //reset game
                         panel.gameState=panel.playState;
                         panel.audioStorage.getTrack(13).isPlaying = false;
+                        panel.enemies.clear();
+                        panel.objects.clear();
                         panel.resetGame();
+                        panel.player.hasKey=0;
+                        panel.ui.showMessage("Спробуйте знову");
                     }
                     else if(panel.ui.menuCommand==1){ //exit game
                         System.exit(0);

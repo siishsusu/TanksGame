@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void resetGame(){
         player.setDefault();
         setter.setEnemies();
+        setter.setObjects();
         player.projectiles.getBullet();
         gameOverSound.isPlaying=false;
 

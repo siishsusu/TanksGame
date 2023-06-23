@@ -4,6 +4,7 @@ import java.util.TimerTask;
 
 public class AssetsSetter {
     GamePanel panel;
+    Timer timer;
     public AssetsSetter(GamePanel panel){
         this.panel=panel;
     }
@@ -96,7 +97,7 @@ public class AssetsSetter {
             panel.enemies.get(8).playerY = panel.tankSize * 43;
             panel.enemies.get(8).projectiles.setLives(60);
         }
-        else if(panel.level==3 && panel.openLevel3){
+        else if(panel.level==3){
             panel.enemies.add(new UsualTurret(panel));
             panel.enemies.get(0).playerX=panel.tankSize*20;
             panel.enemies.get(0).playerY=panel.tankSize*28;
@@ -126,7 +127,6 @@ public class AssetsSetter {
         }
     }
     public void setObjects(){
-        if(panel.level==1){
             panel.objects.add(new KeyObj());
             panel.objects.get(0).worldX = panel.tankSize * 25;
             panel.objects.get(0).worldY = panel.tankSize * 15;
@@ -145,31 +145,10 @@ public class AssetsSetter {
             panel.objects.add(new MinaObj());
             panel.objects.get(4).worldX = panel.tankSize * 25;
             panel.objects.get(4).worldY = panel.tankSize * 17;
-        }else if (panel.level==2){
-            System.out.println(11111);
-            panel.objects.add(new KeyObj());
-            panel.objects.get(0).worldX = panel.tankSize * 25;
-            panel.objects.get(0).worldY = panel.tankSize * 15;
-
-            panel.objects.add(new KeyObj());
-            panel.objects.get(1).worldX = panel.tankSize * 26;
-            panel.objects.get(1).worldY = panel.tankSize * 15;
-
-            panel.objects.add(new GateObj());
-            panel.objects.get(2).worldX = panel.tankSize * 23;
-            panel.objects.get(2).worldY = panel.tankSize * 13;
-            panel.objects.add(new GateObj());
-            panel.objects.get(3).worldX = panel.tankSize * 24;
-            panel.objects.get(3).worldY = panel.tankSize * 13;
-
-            panel.objects.add(new MinaObj());
-            panel.objects.get(4).worldX = panel.tankSize * 25;
-            panel.objects.get(4).worldY = panel.tankSize * 17;
-        }
 
     }
     public void setEnemiesTimed(int x, int y) {
-        Timer timer = new Timer();
+        timer = new Timer();
         TimerTask task = new TimerTask() {
             int tankCount = 0;
             @Override
@@ -181,7 +160,7 @@ public class AssetsSetter {
                     Random random = new Random();
                     int livesAndSpeed = random.nextInt(5)+1;
                     panel.enemies.get(panel.enemies.size() - 1).setLives(livesAndSpeed);
-                    panel.enemies.get(panel.enemies.size() - 1).enemySpeed=livesAndSpeed;
+                    panel.enemies.get(panel.enemies.size() - 1).enemySpeed=livesAndSpeed+3;
                     if(livesAndSpeed==1 || livesAndSpeed==2) panel.enemies.get(panel.enemies.size() - 1).direction="down";
                     else if(livesAndSpeed==3 || livesAndSpeed==4 || livesAndSpeed==5)panel.enemies.get(panel.enemies.size() - 1).direction="right";
                     tankCount++;
@@ -193,7 +172,7 @@ public class AssetsSetter {
         };
 
         long delay = 0;
-        long period = 10000;
+        long period = 5000;
         timer.scheduleAtFixedRate(task, delay, period);
     }
 
