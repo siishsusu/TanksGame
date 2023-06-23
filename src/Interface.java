@@ -21,7 +21,12 @@ public class Interface {
             heartBlank = new ImageIcon("imgs/heart_blank.png").getImage(), energy = new ImageIcon("imgs/energy.png").getImage(),
             background = new ImageIcon("imgs/background menu.jpg").getImage(), coin = new ImageIcon("imgs/coin.png").getImage(),
             hangar = new ImageIcon("imgs/hangar menu.jpg").getImage(), key = new ImageIcon("imgs/key.png").getImage(),
-            freezerImage = new ImageIcon("imgs/freezer.png").getImage(), armourImage = new ImageIcon("imgs/armory.png").getImage();
+            freezerImage = new ImageIcon("imgs/freezer.png").getImage(), armourImage = new ImageIcon("imgs/armory.png").getImage(),
+            soundOnImage = new ImageIcon("imgs/zvuk-off.png").getImage(),
+            soundOffImage = new ImageIcon("imgs/zvuk-on.png").getImage(),
+            soundImage ;
+
+    boolean isSoundOn=true;
 
     private Graphics2D g2;
 
@@ -507,8 +512,15 @@ public class Interface {
         g2.drawString(text, xText-1, yText-1);
         g2.setColor(Color.red);
         g2.drawString(text, xText, yText);
+         if(isSoundOn) {
+             g2.drawImage(soundOnImage, 850, 100, 70, 70, null);
+         }
+         else {
+             g2.drawImage(soundOffImage, 850, 100, 70, 70, null);
+         }
+        }
 
-    }
+
     public void inventoryScreen() {
         int xText, yText;
 

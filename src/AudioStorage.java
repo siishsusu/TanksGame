@@ -18,12 +18,18 @@ public class AudioStorage {
         audioList.add(new Audio("audioFiles\\zvuk pokypky.wav", 0.8*nSound));
         audioList.add(new Audio("audioFiles\\gameover.wav", 1*nSound));
         audioList.add(new Audio("audioFiles\\zloy-smeh-zvuchit-v-multfilme-43278.wav", 0.7*nSound));
-        audioList.add(new Audio("audioFiles\\audioFiles/denejnyie-meshki-poluchayut-zoloto-41788.wav", 0.7*nSound));
+        audioList.add(new Audio("audioFiles\\denejnyie-meshki-poluchayut-zoloto-41788.wav", 0.7*nSound));
 
 
     }
     public Audio getTrack(int nOfTrack){
         return audioList.get(nOfTrack);
+    }
+
+    public void setAllTracksVolume(int i) {
+        for(Audio au : audioList){
+            au.isVolumeCheck(i);
+        }
     }
 
 }

@@ -60,10 +60,19 @@ public class MouseHandler implements MouseListener {
         }
     }
 
+
     @Override
     public void mousePressed(MouseEvent e) {
-        if ((e.getX() > 330)&&(e.getX() < 505)&&(e.getY() > 575)&&(e.getY() < 630) && panel.gameState == panel.pauseState){
+        if ((e.getX() > 850)&&(e.getX() < 920)&&(e.getY() > 100)&&(e.getY() < 170) && panel.gameState == panel.pauseState){
+            if(panel.ui.isSoundOn){
+            panel.ui.isSoundOn = false;
+            panel.audioStorage.nSound=0;
+                panel.audioStorage.setAllTracksVolume(0);
 
+            }else {
+                panel.ui.isSoundOn = true;
+                panel.audioStorage.setAllTracksVolume(1);
+            }
         }
     }
 
